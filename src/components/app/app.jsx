@@ -7,7 +7,6 @@ import BurgerIngredients from "../burger-ingredients/BurgerIngredients";
 
 import { fetchData } from "../../utils/api";
 
-/*import { data } from "../../utils/data";*/
 
 const App = () => {
   const [state, setFetchedState] = useState({
