@@ -1,53 +1,51 @@
 import React from 'react';
-import styles from './burgeringredients.module.css';
-import {Tab, CurrencyIcon, Counter,} from "@ya.praktikum/react-developer-burger-ui-components";
-import {data} from '../../utils/data.js'
+import {useRef, useState} from 'react';
+import burgerStyles from './burgeringredients.module.css';
+import {Tab} from "@ya.praktikum/react-developer-burger-ui-components";
+import {IngredientsType} from '../ingredients-type/IngredientsType'
 
-const getItems =(data, type) => {
+export default function BurgerIngredients ({data}) {
+        
+    const [current, setCurrent] = useState('bun');
+
+    const bunsArray =data.filter((item) => item.type === 'bun');
+    const mainArray =data.filter((item) => item.type === 'main');
+    const sauceArray =data.filter((item) => item.type === 'sauce');
+const bunsRef = useRef(null);
+const mainRef = useRef(null);
+const sauceRef = useRef(null);
+
+
+const sectionRef = useRef(null);
+
+const scroll =(ref) => sectionRef.current.scroll({
+   top: ref.current.offsetTop - sectionRef.current.offsetTop -40 
+})
+
+const onCategoryClick = (cat, catRef) => () => {
+    setCurrent(cat);
+    const element = document.getElementById(cat);
+    if (element) element.scrollIntoView ({behaviour: 'auto'})
+}
+
+
     return(
-        <ul className = {styles.list_ingredients}>
-            {data.filter((item)=> item.type === type).map((item) =>(
-                <li className ={styles.card} key = {item._id}>
-<Counter count = {1} size= 'defaault'/>
-<img src ={item.image}/>
-<div className ={styles.price}>
-    <p className ="text">{item.price}</p>
-    <CurrencyIcon type = "primary"/>
-</div>
-<h4 className = {styles.name}>{item.name}</h4>
-                </li>
-            ))}
-        </ul>
-    )
-};
-
-const BurgerIngredients = () =>{
-    const [current, setCurrent] = React.useState('bun');
-
-    return(
-        <section className = {styles.ingredients}>
-            <h1 className = 'text'>Соберите бургер</h1>
-            <div className ={styles.tab__bar}>
-                <Tab value = 'bun' active ={current==='bun'} onClick = {setCurrent}>Булки</Tab>
-                <Tab value = 'sauce' active ={current==='sauce'} onClick = {setCurrent}>Соусы</Tab>
-                <Tab value = 'main' active ={current==='main'} onClick = {setCurrent}>Начинки</Tab>
+        <section className = 'mr-10'>
+            <p className = 'text text_type_main-large'>Соберите бургер</p>
+            <div className ={`${styles.optionselection} mt-5`}>
+                <Tab  active ={current==='bun'} onClick = {onCategoryClick('bun', bunsRef)}>Булки</Tab>
+                <Tab  active ={current==='sauce'} onClick = {onCategoryClick('sauce', sauceRef)}>Соусы</Tab>
+                <Tab  active ={current==='main'} onClick = {onCategoryClick('main', mainRef)}>Начинки</Tab>
             </div>
-            <ul className ={styles.list_types}>
-<li>
-    <h3 className ='text'>Булки</h3>
-    {getItems(data, 'bun')}
-</li>
-<li>
-    <h3 className ='text'>Соусы</h3>
-    {getItems(data, 'sauce')}
-</li>
-<li>
-    <h3 className ='text'>Начинки</h3>
-    {getItems(data, 'main')}
-</li>
-            </ul>
+            
+            <section className ={styles.options} ref = {sectionRef}>
+<>
+<Ingredientstype id = 'bun' title = 'булки' ingredients ={bunsArray} ref = {bunsRef} />
+<Ingredientstype id = 'sauce' title = 'соусы' ingredients ={sauceArray} ref = {sauceRef} />
+<Ingredientstype id = 'main' title = 'Начинки' ingredients ={mainArray} ref = {mainRef} />
+</>
+        </section>
         </section>
     )
 }
 
-export default BurgerIngredients;
