@@ -1,15 +1,18 @@
 import React from 'react';
-import styles from './app.module.css';
+import { useCallback, useState, useEffect } from 'react';
+import appstyles from './app.module.css';
 import AppHeader from '../app-header/AppHeader';
 import BurgerConstructor from '../burger-constructor/BurgerConstructor';
 import BurgerIngredients from '../burger-ingredients/BurgerIngredients';
 
+import {fetchData} from '../../utils/api'
+
 const App =() => {
     return(
-    <div className ={styles.app__template}>
+    <div className ={appstyles.app__template}>
         <AppHeader />
-       <BurgerIngredients />
-       <BurgerConstructor />
+      {/* <BurgerIngredients />
+       <BurgerConstructor />*/}
     </div>
     );
 }
