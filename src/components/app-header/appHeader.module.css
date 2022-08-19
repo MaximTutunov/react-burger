@@ -1,0 +1,35 @@
+.header{
+width: 100%;
+margin:auto;
+display: grid;
+grid-area: header;
+grid-template-columns: 1fr max-content 1fr;
+align-items: center;
+box-sizing: border-box;
+}
+
+.list{
+display: flex;
+flex-direction: row;
+justify-content: flex-start;
+box-sizing: border-box;
+list-style-type: none;
+margin: 0px;
+gap: 8px;
+
+
+}
+
+.list__item{
+display: flex;
+column-gap: 8px;
+}
+
+.list__item:first-child {
+padding-left: 0px;
+}
+ .profile{
+    composes: list__item;
+    justify-self: end;
+ }
+
