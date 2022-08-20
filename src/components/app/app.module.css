@@ -1,11 +1,11 @@
-.app__template {
+.app {
     width: 100%;
     display: flex;
     flex-direction: column;
     margin: 0 auto;
 }
 
-.main{
+.main {
     max-width: 1280px;
     width: 100%;
     display: flex;
