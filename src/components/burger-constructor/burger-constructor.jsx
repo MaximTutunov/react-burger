@@ -1,4 +1,4 @@
-import React, {useContext, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import {
   CurrencyIcon,
   Button,
@@ -9,12 +9,19 @@ import { ArrayPropTypes } from "../../utils/proptypes";
 import styles from "./burger-constructor.module.css";
 import OrderDetails from "../order-details/order-details";
 import Modal from "../modal/modal";
-import { BurgerConstructorContext } from "../../services/BurgerConstructorContext";
+import { BurgerConstructorContext, TotalPriceContext } from "../../services/BurgerConstructorContext";
+/*import { builtinModules } from "module";*/
 
 
 const BurgerConstructor = () => {
+  
   const [stateOrder, setStateOrder] = React.useState(false);
   const {data} = useContext(BurgerConstructorContext);
+  
+const buns = data.filter((ingredient) => ingredient.type === "bun");
+
+  const [totalPrice, setTotalPrice] = useState(0);
+
   const ingredientsArr = data.filter((ingredient) => ingredient.type !== "bun");
   
   const openModal = () => {
@@ -25,10 +32,19 @@ const BurgerConstructor = () => {
     setStateOrder(false);
   };
 
+useEffect(()=>{
+let total = 0 + buns[0].price *2;
+total = ingredientsArr.reduce((acc,obj) => {
+  return acc + obj.price}, total);
+  setTotalPrice(total)
+}, [totalPrice, setTotalPrice])
+
+
   return (
     <section
       className={`${styles.burgerConstructor} mt-25 pl-4`}
     >
+      <TotalPriceContext.Provider value= {{totalPrice, setTotalPrice}}>
       <div className={`${styles.container} ml-8 pb-4`}>
         <ConstructorElement
           type="top"
@@ -69,7 +85,7 @@ const BurgerConstructor = () => {
       </div>
       <div className={`${styles.totalBox} pt-10`}>
         <div className={`${styles.priceBox} pr-10`}>
-          <p className="text text_type_digits-medium pr-2">610</p>
+          <p className="text text_type_digits-medium pr-2">{totalPrice}</p>
           <CurrencyIcon type="primary" />
         </div>
         <Button type="primary" size="large" onClick={openModal}>
@@ -81,6 +97,7 @@ const BurgerConstructor = () => {
           <OrderDetails />
         </Modal>
       )}
+      </TotalPriceContext.Provider>
     </section>
   );
 };
