@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useContext, useState} from "react";
 import {
   CurrencyIcon,
   Button,
@@ -9,11 +9,14 @@ import { ArrayPropTypes } from "../../utils/proptypes";
 import styles from "./burger-constructor.module.css";
 import OrderDetails from "../order-details/order-details";
 import Modal from "../modal/modal";
+import { BurgerConstructorContext } from "../../services/BurgerConstructorContext";
 
 
-const BurgerConstructor = ({ data }) => {
+const BurgerConstructor = () => {
   const [stateOrder, setStateOrder] = React.useState(false);
+  const {data} = useContext(BurgerConstructorContext);
   const ingredientsArr = data.filter((ingredient) => ingredient.type !== "bun");
+  
   const openModal = () => {
     setStateOrder(true);
   };

@@ -1,12 +1,14 @@
 import React from "react";
 import { ArrayPropTypes } from "../../utils/proptypes";
-import { useState, useRef } from "react";
+import { useState, useRef, useContext } from "react";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import { IngredientsType } from "../ingredients-type/ingredients-type";
 import styles from "./burger-ingredients.module.css";
+import { BurgerConstructorContext } from "../../services/BurgerConstructorContext";
 
-export default function BurgerIngredients({ data }) {
+export default function BurgerIngredients() {
   const [current, setCurrent] = useState("bun");
+  const {data} = useContext(BurgerConstructorContext);
   const bunsArray = data.filter((element) => element.type === "bun");
   const mainArray = data.filter((element) => element.type === "main");
   const sauceArray = data.filter((element) => element.type === "sauce");
