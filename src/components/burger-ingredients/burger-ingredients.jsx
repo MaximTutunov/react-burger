@@ -27,7 +27,6 @@ export default function BurgerIngredients() {
   };*/
 
   
-
 const onTabClick = (tab, categoryRef) => () => {
   setCurrent(tab);
   const element = document.getElementById(tab);
@@ -59,6 +58,3 @@ const onTabClick = (tab, categoryRef) => () => {
   );
 }
 
-BurgerIngredients.propTypes = {
-  data: ArrayPropTypes,
-};
