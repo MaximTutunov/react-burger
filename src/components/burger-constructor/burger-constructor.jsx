@@ -5,7 +5,7 @@ import {
   ConstructorElement,
   DragIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { ArrayPropTypes } from "../../utils/proptypes";
+
 import styles from "./burger-constructor.module.css";
 import OrderDetails from "../order-details/order-details";
 import Modal from "../modal/modal";
@@ -15,25 +15,26 @@ import {
 } from "../../services/BurgerConstructorContext";
 import { apiOrder } from "../../utils/api";
 
+
 const BurgerConstructor = () => {
   const [stateOrder, setStateOrder] = React.useState(false);
 
   const { data } = useContext(BurgerConstructorContext);
 
-  const buns = data.filter((ingredient) => ingredient.type === "bun");
+  const buns = useMemo(()=>data.filter((ingredient) => ingredient.type === "bun"), [data]);
 
   const [totalPrice, setTotalPrice] = useState(0);
 
-  const ingredientsArr = data.filter((ingredient) => ingredient.type !== "bun");
+  const ingredientsArr = useMemo(()=>data.filter((ingredient) => ingredient.type !== "bun"), [data]);
 
-  const [orderNum, setOrderNum] = useState('');
+  const [orderNum, setOrderNum] = useState(0);
 
 const orderData = useMemo(()=> Array.from(ingredientsArr.map((ingredient)=> ingredient._id)).concat(buns), [ingredientsArr]);
 
 
   const openModal = () => {
     setStateOrder(true);
-    apiOrder(orderData).then((res) => setOrderNum(res.order.number))
+    apiOrder(orderData).then((res) => setOrderNum(res.order.number)).catch((error)=>setOrderNum(`Ошибка: ${error.status}`))
   };
 
   const closeAllModals = () => {
@@ -104,6 +105,7 @@ const orderData = useMemo(()=> Array.from(ingredientsArr.map((ingredient)=> ingr
     </section>
   );
 };
+
 
 
 export default BurgerConstructor;
