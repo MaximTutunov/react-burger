@@ -1,51 +1,54 @@
 import React from "react";
-import AppHeader from '../app-header/app-header';
-import BurgerIngredients from '../burger-ingredients/burger-ingredients';
-import BurgerConstructor from '../burger-constructor/burger-constructor';
-import { getData } from '../../utils/api';
-import { useCallback, useEffect, useState } from 'react';
-import styles from './app.module.css';
-import { BurgerConstructorContext  } from "../../services/BurgerConstructorContext";
+import AppHeader from "../app-header/app-header";
+import BurgerIngredients from "../burger-ingredients/burger-ingredients";
+import BurgerConstructor from "../burger-constructor/burger-constructor";
+import { getData } from "../../utils/api";
+import { useCallback, useEffect, useState } from "react";
+import styles from "./app.module.css";
+import { compose, createStore, applyMiddleware } from "redux";
+import thunk from "redux-thunk";
+import { rootReducer } from "../../services/reducers/index";
+import { useDispatch, useSelector } from "react-redux";
+import { getIngredients } from "../../services/actions/index";
 
-function App () {
-  const [state, setLoadingState] = useState({
-    data: [],
-    isLoading: true,
-    hasError: false,
-      });
+const composeEnhancers =
+  typeof window === "object" && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
+    ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({})
+    : compose;
 
-  const getIngredients = useCallback((state) => {
-    setLoadingState({ ...state, isLoading: true, hasError: false});
-    getData()
-      .then((obj) =>
-        setLoadingState({ ...state, data: obj.data, isLoading: false })
-      )
-      .catch((error) => {
-        setLoadingState({ ...state, isLoading: false, hasError: true,  });
-      });
-  }, []);
+const enhancer = composeEnhancers(applyMiddleware(thunk));
+
+export const store = createStore(rootReducer, enhancer);
+
+function App() {
+  const { data, dataRequest, dataFailed } = useSelector((store) => ({
+    data: store.ingredients.data,
+    dataRequest: store.ingredients.dataRequest,
+    dataFailed: store.ingredients.dataFailed,
+  }));
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    getIngredients();
-  }, []);
+    dispatch(getIngredients());
+  }, [dispatch]);
 
-    return (
-      <div className={styles.app}>
-        <AppHeader />
-        <BurgerConstructorContext.Provider value ={state}>
-        <main className={`${styles.main} pl-5`}>
-          {state.isLoading && "Загрузка..."}
-          {state.hasError && "Ошибка"}
-          {!state.isLoading && !state.hasError && (
-            <>
-              <BurgerIngredients /*data={state.data}*/ />
-              <BurgerConstructor /*data={state.data}*/ />
-            </>
-          )}
-        </main>
-        </BurgerConstructorContext.Provider>
-      </div>
-    )
+  return (
+    <div className={styles.app}>
+      <AppHeader />
+
+      <main className={`${styles.main} pl-5`}>
+        {dataRequest && "Загрузка..."}
+        {dataFailed && "Ошибка"}
+        {!dataRequest && !dataFailed && (
+          <>
+            <BurgerIngredients  />
+            <BurgerConstructor  />
+          </>
+        )}
+      </main>
+    </div>
+  );
 }
 
 export default App;

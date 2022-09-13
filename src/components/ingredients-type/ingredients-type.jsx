@@ -8,7 +8,7 @@ export const IngredientsType = forwardRef(({ title, ingredients, id }, ref) => {
     <>
       <h2
         id={id}
-        className={`text text_type_main-medium mt-10 mb-5`} ref={ref}
+        className={`${styles.title} text text_type_main-medium mt-10 mb-5`} ref={ref}
       >
         {title}
       </h2>

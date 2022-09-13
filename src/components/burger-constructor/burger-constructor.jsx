@@ -1,4 +1,5 @@
-import React, { useContext, useEffect, useState, useMemo } from "react";
+import React, {  useEffect, useState, useMemo } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import {
   CurrencyIcon,
   Button,
@@ -9,32 +10,40 @@ import {
 import styles from "./burger-constructor.module.css";
 import OrderDetails from "../order-details/order-details";
 import Modal from "../modal/modal";
-import {
-  BurgerConstructorContext,
-  TotalPriceContext,
-} from "../../services/BurgerConstructorContext";
 import { apiOrder } from "../../utils/api";
-
+import {
+  getOrderNum,
+  getTotalPrice,
+  deleteItem,
+} from "../../services/actions";
 
 const BurgerConstructor = () => {
-  const [stateOrder, setStateOrder] = React.useState(false);
+  const dispatch = useDispatch();
 
-  const { data } = useContext(BurgerConstructorContext);
+  const [stateOrder, setStateOrder] = useState(false);
 
-  const buns = useMemo(()=>data.filter((ingredient) => ingredient.type === "bun"), [data]);
+  const { bun, filling, order, totalPrice } = useSelector((store) => ({
+    bun: store.ingredients.constructorData.bun,
+    filling: store.ingredients.constructorData.filling,
+    order: store.ingredients.order,
+    totalPrice: store.ingredients.totalPrice,
+  }));
 
-  const [totalPrice, setTotalPrice] = useState(0);
+  const bunIdArr = [`${bun._id}`];
 
-  const ingredientsArr = useMemo(()=>data.filter((ingredient) => ingredient.type !== "bun"), [data]);
+  
 
-  const [orderNum, setOrderNum] = useState(0);
+  useMemo(() => bunIdArr.push(`${bun._id}`), [bun]);
 
-const orderData = useMemo(()=> Array.from(ingredientsArr.map((ingredient)=> ingredient._id)).concat(buns), [ingredientsArr]);
-
+  const orderData = useMemo(
+    () =>
+      Array.from(filling.map((el) => el._id)).concat(bunIdArr),
+    [filling]
+  );
 
   const openModal = () => {
     setStateOrder(true);
-    apiOrder(orderData).then((res) => setOrderNum(res.order.number)).catch((error)=>setOrderNum(`Ошибка: ${error.status}`))
+    dispatch(getOrderNum(orderData));
   };
 
   const closeAllModals = () => {
@@ -42,28 +51,23 @@ const orderData = useMemo(()=> Array.from(ingredientsArr.map((ingredient)=> ingr
   };
 
   useEffect(() => {
-    let total = 0 + buns[0].price * 2;
-    total = ingredientsArr.reduce((acc, obj) => {
-      return acc + obj.price;
-    }, total);
-    setTotalPrice(total);
-  }, [totalPrice, setTotalPrice]);
+    dispatch(getTotalPrice(bun, filling));
+  }, [dispatch]);
 
   return (
     <section className={`${styles.burgerConstructor} mt-25 pl-4`}>
-      <TotalPriceContext.Provider value={{ totalPrice, setTotalPrice }}>
         <div className={`${styles.container} ml-8 pb-4`}>
           <ConstructorElement
             type="top"
             isLocked={true}
-            text={`${data[0].name} (верх)`}
-            price={20}
-            thumbnail={data[0].image}
+            text={`${bun.name} (верх)`}
+            price={bun.price}
+            thumbnail={bun.image}
           />
         </div>
         <div className={`${styles.container} `}>
           <ul className={`${styles.list} `}>
-            {ingredientsArr.map((ingredient) => (
+            {filling.map((ingredient) => (
               <li className={`${styles.item} pb-4 pr-2`} key={ingredient._id}>
                 <div className="mr-2">
                   <DragIcon type="primary" />
@@ -82,9 +86,9 @@ const orderData = useMemo(()=> Array.from(ingredientsArr.map((ingredient)=> ingr
           <ConstructorElement
             type="bottom"
             isLocked={true}
-            text={`${data[0].name} (низ)`}
-            price={data[0].price}
-            thumbnail={data[0].image}
+            text={`${bun.name} (низ)`}
+            price={bun.price}
+            thumbnail={bun.image}
           />
         </div>
         <div className={`${styles.totalBox} pt-10`}>
@@ -98,14 +102,11 @@ const orderData = useMemo(()=> Array.from(ingredientsArr.map((ingredient)=> ingr
         </div>
         {stateOrder && (
           <Modal onClose={closeAllModals}>
-            <OrderDetails value ={orderNum}/>
+            <OrderDetails value={order} />
           </Modal>
         )}
-      </TotalPriceContext.Provider>
     </section>
   );
 };
-
-
 
 export default BurgerConstructor;
