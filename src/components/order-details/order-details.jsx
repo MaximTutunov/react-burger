@@ -1,6 +1,9 @@
 import styles from "./order-details.module.css";
+import PropTypes from "prop-types";
 
 export default function OrderDetails(props) {
+
+
   return (
     <>
       <p className={`${styles.title} text text text_type_digits-large`}>{props.value}</p>
@@ -11,3 +14,7 @@ export default function OrderDetails(props) {
     </>
   );
 }
+
+OrderDetails.propTypes = {
+  value: PropTypes.number
+};

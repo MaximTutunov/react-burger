@@ -20,11 +20,7 @@ export default function BurgerIngredients() {
   const mainRef = useRef(null);
 
 
-  /*
-  const onTabClick = (tab) => () => {
-    setCurrent(tab);
-    document.getElementById(tab).scrollIntoView({ behavior: "auto" });
-  };*/
+ 
 
   
 const onTabClick = (tab, categoryRef) => () => {

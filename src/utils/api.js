@@ -6,10 +6,8 @@ const apiConfig = {
 }
 
 const checkResponse = (res) => {
-    return res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`)
+    return res.ok ? res.json() : Promise.reject(res);
 }
-
-
 export const getData = async() => {
     const res = await fetch(`${apiConfig.baseURL}ingredients`);        
     return checkResponse(res);

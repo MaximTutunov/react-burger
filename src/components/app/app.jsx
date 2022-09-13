@@ -12,7 +12,7 @@ function App () {
     data: [],
     isLoading: true,
     hasError: false,
-  });
+      });
 
   const getIngredients = useCallback((state) => {
     setLoadingState({ ...state, isLoading: true, hasError: false});
