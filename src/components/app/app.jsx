@@ -5,6 +5,7 @@ import BurgerConstructor from '../burger-constructor/burger-constructor';
 import { getData } from '../../utils/api';
 import { useCallback, useEffect, useState } from 'react';
 import styles from './app.module.css';
+import { BurgerConstructorContext  } from "../../services/BurgerConstructorContext";
 
 function App () {
   const [state, setLoadingState] = useState({
@@ -31,16 +32,18 @@ function App () {
     return (
       <div className={styles.app}>
         <AppHeader />
+        <BurgerConstructorContext.Provider value ={state}>
         <main className={`${styles.main} pl-5`}>
           {state.isLoading && "Загрузка..."}
           {state.hasError && "Ошибка"}
           {!state.isLoading && !state.hasError && (
             <>
-              <BurgerIngredients data={state.data} />
-              <BurgerConstructor data={state.data} />
+              <BurgerIngredients /*data={state.data}*/ />
+              <BurgerConstructor /*data={state.data}*/ />
             </>
           )}
         </main>
+        </BurgerConstructorContext.Provider>
       </div>
     )
 }

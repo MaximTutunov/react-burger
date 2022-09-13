@@ -1,13 +1,14 @@
 import BurgerIngredient from "../burger-ingredient/burger-ingredient";
 import styles from "./ingredients-type.module.css";
 import PropTypes from "prop-types";
+import { forwardRef } from "react";
 
-export const IngredientsType = ({ title, ingredients, id }) => {
+export const IngredientsType = forwardRef(({ title, ingredients, id }, ref) => {
   return (
     <>
       <h2
         id={id}
-        className={`text text_type_main-medium mt-10 mb-5`}
+        className={`text text_type_main-medium mt-10 mb-5`} ref={ref}
       >
         {title}
       </h2>
@@ -18,7 +19,7 @@ export const IngredientsType = ({ title, ingredients, id }) => {
       </div>
     </>
   );
-};
+});
 
 IngredientsType.propTypes = {
   title: PropTypes.string.isRequired,
