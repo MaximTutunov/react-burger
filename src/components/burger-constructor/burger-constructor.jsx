@@ -22,7 +22,7 @@ const BurgerConstructor = () => {
 
   const [stateOrder, setStateOrder] = useState(false);
 
-  const { bun, filling, order, totalPrice } = useSelector((store) => ({
+ const { bun, filling, order, totalPrice } = useSelector((store) => ({
     bun: store.ingredients.constructorData.bun,
     filling: store.ingredients.constructorData.filling,
     order: store.ingredients.order,

@@ -1,6 +1,6 @@
 import React from "react";
 import { ArrayPropTypes } from "../../utils/proptypes";
-import { useState, useRef,  } from "react";
+import { useState, useRef, useMemo } from "react";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import { IngredientsType } from "../ingredients-type/ingredients-type";
 import styles from "./burger-ingredients.module.css";
@@ -12,9 +12,10 @@ export default function BurgerIngredients() {
   const { data } = useSelector(store => ({
     data: store.ingredients.data
   }));
-  const bunsArray = data.filter((element) => element.type === "bun");
-  const mainArray = data.filter((element) => element.type === "main");
-  const sauceArray = data.filter((element) => element.type === "sauce");
+
+  const bunsArray = useMemo(()=> data.filter((element) => element.type === "bun"), [data]);
+  const mainArray = useMemo(()=> data.filter((element) => element.type === "main"), [data]);
+  const sauceArray = useMemo(()=> data.filter((element) => element.type === "sauce"), [data]);
 
   
 
@@ -28,8 +29,8 @@ export default function BurgerIngredients() {
   
 const onTabClick = (tab, categoryRef) => () => {
   setCurrent(tab);
-  const element = document.getElementById(tab);
-  if (element) element.scrollIntoView({ behavior: "smooth" });
+  const el = document.getElementById(tab);
+  if (el) el.scrollIntoView({ behavior: "smooth" });
 };
 
   return (

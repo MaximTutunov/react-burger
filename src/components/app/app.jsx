@@ -1,8 +1,7 @@
-import React from "react";
+import React, {useRef} from "react";
 import AppHeader from "../app-header/app-header";
 import BurgerIngredients from "../burger-ingredients/burger-ingredients";
 import BurgerConstructor from "../burger-constructor/burger-constructor";
-import { getData } from "../../utils/api";
 import { useCallback, useEffect, useState } from "react";
 import styles from "./app.module.css";
 import { compose, createStore, applyMiddleware } from "redux";
@@ -11,17 +10,11 @@ import { rootReducer } from "../../services/reducers/index";
 import { useDispatch, useSelector } from "react-redux";
 import { getIngredients } from "../../services/actions/index";
 
-const composeEnhancers =
-  typeof window === "object" && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
-    ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({})
-    : compose;
 
-const enhancer = composeEnhancers(applyMiddleware(thunk));
-
-export const store = createStore(rootReducer, enhancer);
 
 function App() {
-  const { data, dataRequest, dataFailed } = useSelector((store) => ({
+  const {  data, dataRequest, dataFailed } = useSelector((store) => ({
+    
     data: store.ingredients.data,
     dataRequest: store.ingredients.dataRequest,
     dataFailed: store.ingredients.dataFailed,
@@ -29,9 +22,21 @@ function App() {
 
   const dispatch = useDispatch();
 
-  useEffect(() => {
+const fetchRan = useRef(false);
+
+useEffect( ()=> {
+  if(fetchRan.current === false) {
     dispatch(getIngredients());
-  }, [dispatch]);
+  }
+  return ()=> {fetchRan.current = true};
+}, [dispatch])
+/*
+  useEffect(() => {
+    dispatch(getData());
+    
+  }, [dispatch]);*/
+
+
 
   return (
     <div className={styles.app}>
@@ -42,8 +47,8 @@ function App() {
         {dataFailed && "Ошибка"}
         {!dataRequest && !dataFailed && (
           <>
-            <BurgerIngredients  />
-            <BurgerConstructor  />
+          <BurgerIngredients  />
+          {/*<BurgerConstructor  />*/}
           </>
         )}
       </main>

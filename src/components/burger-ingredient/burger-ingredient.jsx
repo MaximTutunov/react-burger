@@ -15,9 +15,10 @@ import {
 
 export default function BurgerIngredient(props) {
   const dispatch = useDispatch();
-  const { bun, filling } = useSelector((store) => ({
-    bun: store.constructor.constructorData.bun,
-    filling: store.constructor.constructorData.filling,
+
+ const { bun, filling } = useSelector((store) => ({
+    bun: store.constructord.constructorData.bun,
+    filling: store.constructord.constructorData.filling,
   }));
 
   const isModalOpen = useSelector((store) => store.details.isModalOpen);
@@ -39,7 +40,7 @@ export default function BurgerIngredient(props) {
 
   return (
     <>
-      <div className={styles.card} onClick={openModal}>
+      <div className={styles.card} onClick={openModal}> 
         <img src={props.image} alt={props.name} />
         <div className={`${styles.price} text text_type_digits-default`}>
           <p className={`${styles.price} pt-1 pb-1 pr-2`}>{props.price}</p>
