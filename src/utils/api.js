@@ -7,11 +7,13 @@ const apiConfig = {
 
 const checkResponse = (res) => {
     return res.ok ? res.json() : Promise.reject(res);
+    
 }
+
 export const getData = async() => {
     const res = await fetch(`${apiConfig.baseURL}ingredients`);        
     return checkResponse(res);
-}
+    }
 
 export const apiOrder = async (orderInfo) => {
     const res = await fetch(`${apiConfig.baseURL}orders`, 
@@ -23,4 +25,5 @@ export const apiOrder = async (orderInfo) => {
 
     });        
     return checkResponse(res);
+    
 }
