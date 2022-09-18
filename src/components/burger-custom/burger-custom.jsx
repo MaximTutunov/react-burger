@@ -7,6 +7,7 @@ import {
   DragIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { UPDATE_ITEMS } from "../../services/actions";
+import PropTypes from "prop-types";
 
 export default function BurgerCustom({ item, index, handleClose }) {
   const ref = useRef();
@@ -39,12 +40,7 @@ export default function BurgerCustom({ item, index, handleClose }) {
   drag(drop(ref));
 
   return (
-    <li
-      className={`${styles.item} pb-4 pr-2`}
-      key={item._id}
-      ref={ref}
-      style={{ opacity }}
-    >
+    <li className={`${styles.item} pb-4 pr-2`} ref={ref} style={{ opacity }}>
       <div className="mr-2">
         <DragIcon type="primary" />
       </div>
@@ -58,3 +54,9 @@ export default function BurgerCustom({ item, index, handleClose }) {
     </li>
   );
 }
+
+BurgerCustom.propTypes = {
+  item: PropTypes.object.isRequired,
+  index: PropTypes.number.isRequired,
+  handleClose: PropTypes.func.isRequired,
+};

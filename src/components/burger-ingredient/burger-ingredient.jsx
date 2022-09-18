@@ -1,28 +1,18 @@
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { useDrag } from "react-dnd/dist/hooks";
-import IngredientsDetails from "../ingredients-details/ingredients-details";
-import Modal from "../modal/modal";
 import {
   CurrencyIcon,
   Counter,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./burger-ingredient.module.css";
 import { ingredientsPropTypes } from "../../utils/proptypes";
-import {
-  openCurrentIngredient,
-  closeCurrentIngredient,
-} from "../../services/actions";
 
 export default function BurgerIngredient(props) {
-  const dispatch = useDispatch();
-
   const { bun, filling } = useSelector((store) => ({
     bun: store.assembled.constructorData.bun,
     filling: store.assembled.constructorData.filling,
   }));
-
-  const isModalOpen = useSelector((store) => store.details.isModalOpen);
 
   let count;
 
@@ -39,16 +29,9 @@ export default function BurgerIngredient(props) {
     [props]
   );
 
-  const openModal = () => {
-    dispatch(openCurrentIngredient(props), [dispatch]);
-  };
-  const closeAllModals = () => {
-    dispatch(closeCurrentIngredient(props), [dispatch]);
-  };
-
   return (
     <>
-      <div className={styles.card} onClick={openModal} ref={dragRef}>
+      <div className={styles.card} onClick={props.openModal} ref={dragRef}>
         <img src={props.image} alt={props.name} />
         <div className={`${styles.price} text text_type_digits-default`}>
           <p className={`${styles.price} pt-1 pb-1 pr-2`}>{props.price}</p>
@@ -60,11 +43,6 @@ export default function BurgerIngredient(props) {
           {bunValue && <Counter count={bunValue} size="default" />}
         </div>
       </div>
-      {isModalOpen && (
-        <Modal title="Детали ингредиента" onClose={closeAllModals}>
-          <IngredientsDetails />
-        </Modal>
-      )}
     </>
   );
 }

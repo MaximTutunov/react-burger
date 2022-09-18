@@ -25,20 +25,21 @@ export const getIngredients = () => {
     dispatch({
       type: GET_INGREDIENTS_REQUEST,
     });
-    getData().then((res) => {
-      if (res && res.success) {
+
+    getData()
+      .then((res) => {
         dispatch({
           type: GET_INGREDIENTS_SUCCESS,
           data: res.data,
           bun: {},
           filling: [],
         });
-      } else {
+      })
+      .catch((res) => {
         dispatch({
           type: GET_INGREDIENTS_FAILED,
         });
-      }
-    });
+      });
   };
 };
 
@@ -47,18 +48,19 @@ export const getOrderNum = (orderData) => {
     dispatch({
       type: GET_ORDERNUM_REQUEST,
     });
-    apiOrder(orderData).then((res) => {
-      if (res) {
+
+    apiOrder(orderData)
+      .then((res) => {
         dispatch({
           type: GET_ORDERNUM_SUCCESS,
           orderNum: res.order.number,
-        });
-      } else {
+          });
+      })
+      .catch((res) => {
         dispatch({
           type: GET_ORDERNUM_FAILED,
         });
-      }
-    });
+      });
   };
 };
 

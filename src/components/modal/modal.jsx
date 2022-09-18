@@ -8,11 +8,10 @@ import PropTypes from "prop-types";
 const modalsContainer = document.querySelector("#modals");
 
 export default function Modal({ title, onClose, children }) {
-  const handleEscKeydown = (evt) => {
-    evt.key === "Escape" && onClose();
-  };
-
   useEffect(() => {
+    const handleEscKeydown = (evt) => {
+      evt.key === "Escape" && onClose();
+    };
     document.addEventListener("keydown", handleEscKeydown);
     return () => {
       document.removeEventListener("keydown", handleEscKeydown);

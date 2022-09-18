@@ -1,20 +1,29 @@
 import React from "react";
-/*import { useInView } from "react-intersection-observer";*/
 import { useState, useRef, useMemo } from "react";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import { IngredientsType } from "../ingredients-type/ingredients-type";
 import styles from "./burger-ingredients.module.css";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import Modal from "../modal/modal";
+import { closeCurrentIngredient, openCurrentIngredient } from "../../services/actions";
+import IngredientsDetails from "../ingredients-details/ingredients-details";
 
 export default function BurgerIngredients() {
-  /* const { ref, inView, entry } = useInView({
-    threshold: 0,
-  });*/
 
+  const dispatch = useDispatch();
+  
+  const closeAllModals = () => {
+    dispatch(closeCurrentIngredient());
+  };
+
+  const openModal = (ingredient) => {
+    dispatch(openCurrentIngredient(ingredient));
+  }
   const [current, setCurrent] = useState("bun");
 
-  const { data } = useSelector((store) => ({
+  const { data, isModalOpen } = useSelector((store) => ({
     data: store.ingredients.data,
+    isModalOpen: store.details.isModalOpen,
   }));
 
   const bunsSelection = useMemo(
@@ -88,18 +97,21 @@ export default function BurgerIngredients() {
       <section className={styles.tabs} onScroll={autoTab} ref={sectionRef}>
         <>
           <IngredientsType
+            openModal={openModal}
             id="bun"
             title="Булки"
             ingredients={bunsSelection}
             ref={bunsRef}
           />
           <IngredientsType
+            openModal={openModal}
             id="sauce"
             title="Соусы"
             ingredients={saucesSelection}
             ref={sauceRef}
           />
           <IngredientsType
+            openModal={openModal}
             id="main"
             title="Начинки"
             ingredients={mainsSelection}
@@ -107,6 +119,11 @@ export default function BurgerIngredients() {
           />
         </>
       </section>
+      {isModalOpen && (
+        <Modal title="Детали ингредиента" onClose={closeAllModals}>
+          <IngredientsDetails />
+        </Modal>
+      )}
     </section>
   );
 }
