@@ -1,0 +1,31 @@
+.item {
+    position: relative;
+    flex-direction: column;
+    width: 100%;
+    max-width: 272px;
+}
+
+.image {
+    width: 100%;
+}
+
+.price {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.name {
+    text-align: center;
+}
+
+.link{
+    color: inherit;
+    text-decoration: none;
+    cursor: pointer;
+
+}
+.link:hover{
+    opacity: 0.8;
+    transition: 0.5s all ease-in-out;
+}

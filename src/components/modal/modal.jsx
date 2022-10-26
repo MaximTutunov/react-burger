@@ -7,11 +7,13 @@ import PropTypes from "prop-types";
 
 const modalsContainer = document.querySelector("#modals");
 
-export default function Modal({ title, onClose, children }) {
-  useEffect(() => {
-    const handleEscKeydown = (evt) => {
-      evt.key === "Escape" && onClose();
-    };
+export default function Modal({ description, closeModal, children }) {
+  React.useEffect(() => {
+    function handleEscKeydown(evt) {
+      if (evt.key === "Escape") {
+        closeModal();
+      }
+    }
     document.addEventListener("keydown", handleEscKeydown);
     return () => {
       document.removeEventListener("keydown", handleEscKeydown);
@@ -20,16 +22,20 @@ export default function Modal({ title, onClose, children }) {
 
   return ReactDOM.createPortal(
     <>
-      <div className={styles.modal}>
-        <button className={styles.closebutton} onClick={onClose}>
-          <CloseIcon />
+      <div className={modalStyles.container}>
+        <h3
+          className={`${modalStyles.description} text text_type_main-large pt-15 pb-1 pl-10`}
+        >
+          {description}
+        </h3>
+        <button className={modalStyles.close_button}>
+          <CloseIcon onClick={closeModal} />
         </button>
-        <h3 className={`${styles.title} text text_type_main-large`}>{title}</h3>
         {children}
       </div>
-      <ModalOverlay onClick={onClose} />
+      <ModalOverlay closeModal={closeModal} />
     </>,
-    modalsContainer
+    modalWindow
   );
 }
 
