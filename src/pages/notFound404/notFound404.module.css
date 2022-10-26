@@ -1,0 +1,16 @@
+.container {
+	background: #0f0f0f;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	margin: 40px auto 0;
+}
+
+.link {
+	text-decoration: none;
+	transition: all 0.4s ease-in-out;
+}
+.link:hover {
+	color: #FFFFFF;
+}
+

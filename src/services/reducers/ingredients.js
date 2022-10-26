@@ -1,70 +1,44 @@
 import {
-  GET_INGREDIENTS_REQUEST,
-  GET_INGREDIENTS_SUCCESS,
-  GET_INGREDIENTS_FAILED,
-  GET_ORDERNUM_REQUEST,
-  GET_ORDERNUM_SUCCESS,
-  GET_ORDERNUM_FAILED,
-  GET_TOTALPRICE,
-} from "../actions/index";
-import { initialState } from "./index";
+  BURGER_INGREDIENTS_FAILED,
+  BURGER_INGREDIENTS_REQUEST,
+  BURGER_INGREDIENTS_SUCCESS,
+} from "../actions/ingredients";
 
-export const ingredientsReducer = (state = initialState, action) => {
+const ingredientsInitialState = {
+  ingredients: [],
+  ingredientsRequest: false,
+  ingredientsFailed: false,
+  isLoading: false,
+  hasError: false,
+};
+
+export const ingredientsReducer = (state = ingredientsInitialState, action) => {
   switch (action.type) {
-    case GET_INGREDIENTS_REQUEST: {
+    case BURGER_INGREDIENTS_REQUEST: {
       return {
         ...state,
-        dataRequest: true,
+        ingredientsFailed: false,
+        ingredientsRequest: true,
+        hasError: false,
+        isLoading: true,
       };
     }
-    case GET_INGREDIENTS_SUCCESS: {
+    case BURGER_INGREDIENTS_FAILED: {
       return {
         ...state,
-        data: action.data,
-        constructorData: {
-          ...state.constructorData,
-          bun: action.bun,
-          filling: action.filling,
-        },
-        dataFailed: false,
-
-        dataRequest: false,
+        ingredientsFailed: true,
+        ingredientsRequest: false,
+        isLoading: false,
+        hasError: true,
       };
     }
-    case GET_INGREDIENTS_FAILED: {
+    case BURGER_INGREDIENTS_SUCCESS: {
       return {
         ...state,
-        dataFailed: true,
-        dataRequest: false,
-      };
-    }
-    case GET_ORDERNUM_REQUEST: {
-      return {
-        ...state,
-        orderNumRequest: true,
-      };
-    }
-    case GET_ORDERNUM_SUCCESS: {
-      return {
-        ...state,
-
-        order: action.orderNum,
-        orderNumRequest: false,
-        orderNumFailed: false,
-      };
-    }
-    case GET_ORDERNUM_FAILED: {
-      return {
-        ...state,
-        orderNumRequest: false,
-        orderNumFailed: true,
-        currentIngredient: {},
-      };
-    }
-    case GET_TOTALPRICE: {
-      return {
-        ...state,
-        totalPrice: action.totalPrice,
+        ingredients: action.ingredients,
+        ingredientsRequest: false,
+        ingredientsFailed: false,
+        isLoading: false,
       };
     }
     default: {

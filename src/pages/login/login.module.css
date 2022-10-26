@@ -1,0 +1,33 @@
+.container {
+	padding: 200px 0 0 0;
+	max-width: 480px;
+	margin: auto;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.link {
+	padding: 0 0 0 6px;
+	transition: all 0.4s ease-in-out;
+}
+.link:hover {
+	color: #FFFFFF;
+	opacity: 0.7;
+}
+
+.form {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.form svg {
+	margin: 0 0 0 190px;
+}
+
+.form div {
+	width: 100%;
+}
+
+

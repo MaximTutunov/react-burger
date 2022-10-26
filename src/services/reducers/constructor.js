@@ -1,67 +1,56 @@
-import { initialState } from "./index";
+import {
+  ADD_BUN,
+  ADD_INGREDIENT_CONSTRUCTOR,
+  DELETE_INGREDIENT,
+  MOVE_INGREDIENT,
+  RESET_INGREDIENT,
+} from "../actions/constructor";
 
-import { ADD_ITEM, ADD_BUN, DELETE_ITEM, UPDATE_ITEMS } from "../actions/index";
+const initialState = {
+  items: [],
+  bun: [],
+};
 
 export const constructorReducer = (state = initialState, action) => {
   switch (action.type) {
-    case ADD_ITEM: {
-      const ingredientSum =
-        state.constructorData.filling.filter(function (item) {
-          return item._id === action.item._id;
-        }).length + 1;
+    case DELETE_INGREDIENT: {
       return {
         ...state,
-        constructorData: {
-          ...state.constructorData,
-          filling: [
-            ...state.constructorData.filling.map((item) => ({
-              ...item,
-            })),
-            ...[
-              {
-                ...action.item,
-                key: action.key,
-                count: ingredientSum,
-              },
-            ],
-          ],
-        },
+        items: [...state.items].filter((item) => {
+          return item.id !== action.id;
+        }),
       };
     }
     case ADD_BUN: {
       return {
         ...state,
-        constructorData: {
-          ...state.constructorData,
-          bun: { ...action.item, count: 1 },
-        },
+        bun: action.data,
       };
     }
+    case ADD_INGREDIENT_CONSTRUCTOR: {
+      return {
+        ...state,
+        items: [...state.items, action.data],
+      };
+    }
+    case RESET_INGREDIENT: {
+      return {
+        ...state,
+        items: [],
+        bun: [],
+      };
+    }
+    case MOVE_INGREDIENT: {
+      const dragConstructor = [...state.items];
+      dragConstructor.splice(
+        action.data.dragIndex,
+        0,
+        dragConstructor.splice(action.data.hoverIndex, 1)[0]
+      );
 
-    case DELETE_ITEM: {
       return {
         ...state,
-        constructorData: {
-          ...state.constructorData,
-          filling: state.constructorData.filling
-            .map((item) =>
-              item._id === action.item._id
-                ? { ...item, count: item.count - 1 }
-                : item
-            )
-            .filter((item) => item.count > 0),
-        },
-      };
-    }
-    case UPDATE_ITEMS: {
-      const filling = [...state.constructorData.filling];
-      filling.splice(action.toIndex, 0, filling.splice(action.fromIndex, 1)[0]);
-      return {
-        ...state,
-        constructorData: {
-          ...state.constructorData,
-          filling: filling,
-        },
+        items: dragConstructor,
       };
     }
     default: {
