@@ -1,0 +1,25 @@
+.category {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  list-style: none;
+  column-gap: 18px;
+  padding: 0;
+  margin: 0;
+  width: 100%;
+  max-width: 592px;
+}
+
+.name {
+  text-align: left;
+}
+
+.item {
+  margin: 0;
+}

@@ -1,53 +1,61 @@
-.burgerConstructor {
-  max-height: 912px;
-  min-width: 600px;
-    display: flex;
+.section {
+  display: flex;
   flex-direction: column;
+  width: 100%;
+  max-width: 600px;
+  gap: 10px;
+  }
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .list {
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
-  justify-content: space-around;
-  padding: 0;
+  height: calc(100vh - 324px);
+  overflow-x: hidden;
+  overflow-y: auto;
   margin: 0;
-  list-style: none;
-  max-height: 480px;
-  max-width: 585px;
-  width: 100%;
-  height: 100%;
-  overflow-y: scroll;
-  scrollbar-width: thin;
+  padding: 0;
 }
 
-.item {
-  display: flex;
-  align-items: center;
-  cursor: move;
+.list::-webkit-scrollbar {
+  background-color: #2F2F37;
+  width: 8px;
 }
 
-.totalBox {
+.list::-webkit-scrollbar-thumb {
+  background-color: #8585AD;
+}
+
+.total {
   display: flex;
   justify-content: flex-end;
-  margin-right: 26px;
 }
 
-.priceBox {
+.sum {
   display: flex;
+  justify-content: center;
   align-items: center;
-  
+}
+.text{
+  display:flex;
+justify-content: center;
+align-items: center;
+}
+.buninitial {
+  padding: 40px 30px;
+  outline: 3px outset #8585AD;
+   border-radius: 2rem;
 }
 
-::-webkit-scrollbar {
-  width: 8px;
-  background-color: #2f2f37;
+.maininitial {
+  margin: 2px;
+  padding: 0px 30px;
+  outline: 3px outset #8585AD;
+   border-radius: 2rem;
 }
 
-::-webkit-scrollbar-thumb {
-  background-color: #8585ad;
-}
-
-.prompt {
-  text-align: center;
+.listmain {
+  height: calc(100vh - 450px);
 }

@@ -1,16 +1,30 @@
-.title{
-  margin-top: 56px;
-  margin-bottom: 20px;
-}
+.section {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 600px;
+  box-sizing: border-box;
+  }
+.title {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  }
 
-.container {
+.category {
   display: flex;
 }
-
-.tabs {
-  max-height: 716px;
-  max-width: 608px;
-  overflow-y: scroll;
-  scrollbar-color: #8585ad;
-  scrollbar-width: thin;
+.ingredients {
+  height: calc(100vh - 324px);
+  overflow-x: hidden;
+  overflow-y: auto;
+  margin: 0;
+  padding-left: 0;
+}
+.ingredients::-webkit-scrollbar {
+  background-color: #2F2F37;
+  width: 8px;
+}
+.ingredients::-webkit-scrollbar-thumb {
+  background-color: #8585AD;
 }

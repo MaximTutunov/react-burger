@@ -1,17 +1,18 @@
+import React from "react";
 import ReactDOM from "react-dom";
-import { useEffect } from "react";
 import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import ModalOverlay from "../modal-overlay/modal-overlay";
-import styles from "./modal.module.css";
 import PropTypes from "prop-types";
+import style from "./modal.module.css";
+const modalWindow = document.querySelector("#modal");
 
-const modalsContainer = document.querySelector("#modals");
-
-export default function Modal({ title, onClose, children }) {
-  useEffect(() => {
-    const handleEscKeydown = (evt) => {
-      evt.key === "Escape" && onClose();
-    };
+export default function Modal({ description, closeModal, children }) {
+  React.useEffect(() => {
+    function handleEscKeydown(evt) {
+      if (evt.key === "Escape") {
+        closeModal();
+      }
+    }
     document.addEventListener("keydown", handleEscKeydown);
     return () => {
       document.removeEventListener("keydown", handleEscKeydown);
@@ -20,21 +21,25 @@ export default function Modal({ title, onClose, children }) {
 
   return ReactDOM.createPortal(
     <>
-      <div className={styles.modal}>
-        <button className={styles.closebutton} onClick={onClose}>
-          <CloseIcon />
+      <div className={style.container}>
+        <h3
+          className={`${style.description} text text_type_main-large pt-15 pb-1 pl-10`}
+        >
+          {description}
+        </h3>
+        <button className={style.close_button}>
+          <CloseIcon onClick={closeModal} />
         </button>
-        <h3 className={`${styles.title} text text_type_main-large`}>{title}</h3>
         {children}
       </div>
-      <ModalOverlay onClick={onClose} />
+      <ModalOverlay closeModal={closeModal} />
     </>,
-    modalsContainer
+    modalWindow
   );
 }
 
 Modal.propTypes = {
-  title: PropTypes.string,
-  onClose: PropTypes.func.isRequired,
-  children: PropTypes.element.isRequired,
+  closeModal: PropTypes.func.isRequired,
+  children: PropTypes.node.isRequired,
+  description: PropTypes.string,
 };

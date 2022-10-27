@@ -1,52 +1,35 @@
-import styles from "./order-details.module.css";
-import PropTypes from "prop-types";
 import { useSelector } from "react-redux";
-
-export default function OrderDetails(props) {
-  const { order, orderNumRequest, orderNumFailed } = useSelector((store) => ({
-    order: store.ingredients.order,
-    orderNumRequest: store.ingredients.orderNumRequest,
-    orderNumFailed: store.ingredients.orderNumFailed,
-  }));
+import acceptedImg from "../../images/AcceptedIcon.svg";
+import style from "./order-details.module.css";
+export default function OrderDetails () {
+  const orderNumber = useSelector((store) => store.order.number);
   return (
-    <>
-    {!orderNumRequest && !order && (
-        <p className={`${styles.subtitle} text text_type_main-medium`}>
-          Соберите, пожалуйста, бургер полностью
-        </p>
-      )}
-      {orderNumRequest && (
-        <p className={`${styles.subtitle} text text_type_main-medium`}>
-          Идет отправка Вашего заказа на кухню
-        </p>
-      )}
-
-      {orderNumFailed && (
-        <p className={`${styles.subtitle} text text_type_main-medium`}>
-         Возникла ошибка. Попробуйте еще раз, пожалуйста!
-        </p>
-      )}
-    {!orderNumRequest && !orderNumFailed && order &&(<>
-      <p className={`${styles.title} text text text_type_digits-large`}>
-        {props.value}
-      </p>
-      <p className={`${styles.subtitle} text text_type_main-medium`}>
+   <div className={`${style.container} pl-25 pr-25`}>
+      <h2
+        className={`${style.title} text text_type_digits-large pt-15 pb-8`}
+      >
+        {orderNumber}
+      </h2>
+      <p
+        className={`${style.text} text text_type_main-medium pb-15`}
+      >
         идентификатор заказа
       </p>
-      <div className={styles.check}></div>
-      <p className={`${styles.text} text text_type_main-default`}>
+      <img
+        className={`${style.icon} pb-15`}
+        src={acceptedImg}
+        alt={acceptedImg}
+      />
+      <p
+        className={`${style.text} text text_type_main-default pb-2`}
+      >
         Ваш заказ начали готовить
       </p>
       <p
-        className={`${styles.text} text text_type_main-default text_color_inactive`}
+        className={`${style.text} text text_type_main-default text_color_inactive pb-30`}
       >
         Дождитесь готовности на орбитальной станции
       </p>
-    </>)}
-    </>
+    </div>
   );
 }
-
-OrderDetails.propTypes = {
-  value: PropTypes.number,
-};
