@@ -1,23 +1,17 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Button,
   Input,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink, Route, Switch } from "react-router-dom";
-import {
-  singOut,
-  updateUser,
-} from "../../services/actions/authorization";
+import { singOut, updateUser } from "../../services/actions/authAction";
 import { Orders } from "./orders/orders";
-import profileStyle from "./profile.module.css";
+import style from "./profile.module.css";
 
-export const Profile = () => {
-  const { email, name } = useSelector((state) => state.authorization.user);
-  
+export function Profile() {
   const dispatch = useDispatch();
-
-
+  const { email, name } = useSelector((state) => state.authorization.user);
   const [form, setForm] = useState({
     email: "",
     name: "",
@@ -28,13 +22,13 @@ export const Profile = () => {
     dispatch(singOut());
   }
 
+  function onChange(evt) {
+    setForm({ ...form, [evt.target.name]: evt.target.value });
+  }
+
   function submit(evt) {
     evt.preventDefault();
     dispatch(updateUser(form.email, form.name, form.password));
-  }
-
-  function onChange(evt) {
-    setForm({ ...form, [evt.target.name]: evt.target.value });
   }
 
   useEffect(() => {
@@ -54,38 +48,36 @@ export const Profile = () => {
     });
   }
 
-
-
   return (
-    <div className={`${profileStyle.container} pt-30`}>
-      <nav className={`${profileStyle.nav} pr-15`}>
-        <ul className={`${profileStyle.items}`}>
-          <li className={`${profileStyle.item}`}>
+    <div className={`${style.container} pt-30`}>
+      <nav className={`${style.nav} pr-15`}>
+        <ul className={`${style.items}`}>
+          <li className={`${style.item}`}>
             <NavLink
               to="/profile"
               exact
-              className={`${profileStyle.link} text_type_main-medium text_color_inactive text`}
-              activeClassName={`${profileStyle.linkActive} text_type_main-medium text`}
+              className={`${style.link} text_type_main-medium text_color_inactive text`}
+              activeClassName={`${style.linkActive} text_type_main-medium text`}
             >
               Профиль
             </NavLink>
           </li>
-          <li className={`${profileStyle.item}`}>
+          <li className={`${style.item}`}>
             <NavLink
               to="/profile/orders"
               exact
-              className={`${profileStyle.link} text_type_main-medium text_color_inactive text`}
-              activeClassName={`${profileStyle.linkActive} text_type_main-medium text`}
+              className={`${style.link} text_type_main-medium text_color_inactive text`}
+              activeClassName={`${style.linkActive} text_type_main-medium text`}
             >
               История заказов
             </NavLink>
           </li>
-          <li className={`${profileStyle.item}`}>
+          <li className={`${style.item}`}>
             <NavLink
               to="/login"
               exact
-              className={`${profileStyle.link} text_type_main-medium text_color_inactive text`}
-              activeClassName={`${profileStyle.linkActive} text_type_main-medium text`}
+              className={`${style.link} text_type_main-medium text_color_inactive text`}
+              activeClassName={`${style.linkActive} text_type_main-medium text`}
               onClick={onSingOut}
             >
               Выход
@@ -93,17 +85,17 @@ export const Profile = () => {
           </li>
         </ul>
         <p
-          className={`${profileStyle.description} pt-20 pb-4 text_type_main-default text_color_inactive text`}
+          className={`${style.description} pt-20 pb-4 text_type_main-default text_color_inactive text`}
         >
           В этом разделе вы можете изменить свои персональные данные
         </p>
       </nav>
       <Switch>
-        <Route path="/profile/orders" exact >
+        <Route path="/profile/orders" exact>
           <Orders />
         </Route>
         <Route path="/profile" exact>
-          <form className={profileStyle.form} onSubmit={submit}>
+          <form className={style.form} onSubmit={submit}>
             <div className="pb-6">
               <Input
                 type={"text"}
@@ -143,7 +135,7 @@ export const Profile = () => {
                 size={"default"}
               />
             </div>
-            <div className={profileStyle.buttons}>
+            <div className={style.buttons}>
               <Button type="primary" size="medium" onClick={reset}>
                 Oтмена
               </Button>
@@ -160,4 +152,4 @@ export const Profile = () => {
       </Switch>
     </div>
   );
-};
+}

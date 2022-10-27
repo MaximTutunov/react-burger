@@ -1,30 +1,22 @@
-import React from "react";
-import { useState, useRef, useMemo } from "react";
+import React, { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
+import { useInView } from 'react-intersection-observer';
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
-import { IngredientsType } from "../ingredients-type/ingredients-type";
-import styles from "./burger-ingredients.module.css";
-import { useDispatch, useSelector } from "react-redux";
-import Modal from "../modal/modal";
-import { closeCurrentIngredient, openCurrentIngredient } from "../../services/actions";
-import IngredientsDetails from "../ingredients-details/ingredients-details";
+import Ingredients from "../ingredients/ingredients";
+import style from "./burger-ingredients.module.css";
 
-export default function BurgerIngredients() {
-
-  const ingredients = useSelector(store => store.burgerIngredients.ingredients)
-
+export default function BurgerIngredients () {
   const [current, setCurrent] = useState("bun");
-
-
+  const ingredients = useSelector(store => store.burgerIngredients.ingredients)
   const [bunRef, bunView] = useInView({
+		threshold: 0.1
+	});
+  const [mainRef, mainView] = useInView({
 		threshold: 0.1
 	});
 	const [sauceRef, sauceView] = useInView({
 		threshold: 0.1
 	});
-	const [mainRef, mainView] = useInView({
-		threshold: 0.1
-	});
-
   const scrollTabClick = (e) => {
 		setCurrent(e);
 		const section = document.getElementById(e);
@@ -52,13 +44,13 @@ export default function BurgerIngredients() {
 	}, [bunView, sauceView, mainView]);
 
   return (
-    <section className={`${burgerIngredientsStyles.section} mt-10 pl-5`}>
+    <section className={`${style.section} mt-10 pl-5`}>
       <h1
-        className={`${burgerIngredientsStyles.title} text text_type_main-large mb-5`}
+        className={`${style.title} text text_type_main-large mb-5`}
       >
         Соберите бургер
       </h1>
-      <div className={`${burgerIngredientsStyles.category} mb-5`}>
+      <div className={`${style.category} mb-5`}>
         <Tab
           active={current === "bun"}
           onClick={(e) => scrollTabClick(e)}
@@ -84,7 +76,7 @@ export default function BurgerIngredients() {
         </Tab>
       </div>
 
-      <ul className={`${burgerIngredientsStyles.ingredients} pt-5`}>
+      <ul className={`${style.ingredients} pt-5`}>
         <Ingredients
           ingredients={ingredients}
           type="bun"
@@ -104,3 +96,4 @@ export default function BurgerIngredients() {
     </section>
   );
 }
+

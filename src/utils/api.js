@@ -7,7 +7,7 @@ export const Api = {
   },
 };
 
-export const processResponse = (res) => {
+export const checkResponse = (res) => {
   if (res.ok) {
     return res.json();
   } else {
@@ -16,7 +16,7 @@ export const processResponse = (res) => {
 };
 
 function request(url, options) {
-  return fetch(url, options).then(processResponse);
+  return fetch(url, options).then(checkResponse);
 }
 
 export const getIngredientsData = async () => {
@@ -25,6 +25,31 @@ export const getIngredientsData = async () => {
     headers: {
       "Content-Type": "application/json",
     },
+  });
+};
+
+export const getUserRequest = async () => {
+  return await fetchRefresh(`${Api.url}/auth/user`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + getCookie("token"),
+    },
+  });
+};
+
+export const updateUserRequest = async (email, name, password) => {
+  return await fetchRefresh(`${Api.url}/auth/user`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + getCookie("token"),
+    },
+    body: JSON.stringify({
+      email: email,
+      name: name,
+      password: password,
+    }),
   });
 };
 
@@ -105,31 +130,6 @@ export const logoutRequest = async () => {
   })
 };
 
-export const getUserRequest = async () => {
-  return await fetchRefresh(`${Api.url}/auth/user`, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: "Bearer " + getCookie("token"),
-    },
-  });
-};
-
-export const updateUserRequest = async (email, name, password) => {
-  return await fetchRefresh(`${Api.url}/auth/user`, {
-    method: "PATCH",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: "Bearer " + getCookie("token"),
-    },
-    body: JSON.stringify({
-      email: email,
-      name: name,
-      password: password,
-    }),
-  });
-};
-
 export const updateTokenRequest = async () => {
   return await request(`${Api.url}/auth/token`, {
     method: "POST",
@@ -145,7 +145,7 @@ export const updateTokenRequest = async () => {
 export const fetchRefresh = async (url, options) => {
   try {
     const res = await fetch(url, options);
-    return await processResponse(res);
+    return await checkResponse(res);
   } catch (err) {
     if (err.message === "jwt expired") {
       const refreshToken = await updateTokenRequest();
@@ -157,7 +157,7 @@ export const fetchRefresh = async (url, options) => {
       setCookie("token", accessToken);
       options.headers.Authorization = refreshToken.accessToken;
       const res = await fetch(url, options);
-      return await processResponse(res);
+      return await checkResponse(res);
     } else {
       return Promise.reject(err);
     }

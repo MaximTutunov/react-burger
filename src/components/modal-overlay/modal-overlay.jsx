@@ -1,14 +1,12 @@
-import styles from "./modal-overlay.module.css";
 import PropTypes from "prop-types";
+import style from "./modal-overlay.module.css";
 
-const ModalOverlay = ({ closeModal }) => {
+export default function  ModalOverlay ({ closeModal }) {
   return (
-    <div className={modalOverlayStyles.overlay} onClick={closeModal}></div>
+    <div className={style.overlay} onClick={closeModal}></div>
   );
 };
 
 ModalOverlay.propTypes = {
   closeModal: PropTypes.func.isRequired,
 };
-
-export default ModalOverlay;

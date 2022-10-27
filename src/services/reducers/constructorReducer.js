@@ -4,7 +4,7 @@ import {
   DELETE_INGREDIENT,
   MOVE_INGREDIENT,
   RESET_INGREDIENT,
-} from "../actions/constructor";
+} from "../actions/constructorAction";
 
 const initialState = {
   items: [],

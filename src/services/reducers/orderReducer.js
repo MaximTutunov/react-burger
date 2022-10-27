@@ -3,7 +3,7 @@ import {
     ORDER_DETAILS_FAILED,
     ORDER_DETAILS_REQUEST,
     ORDER_DETAILS_SUCCESS,
-  } from "../actions/order";
+  } from "../actions/orderAction";
   
   const orderInitialState = {
     orderDetailsFailed: false,

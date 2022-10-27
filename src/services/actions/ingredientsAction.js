@@ -1,4 +1,4 @@
-import { getIngredientsData } from "../../utils/Api";
+import { getIngredientsData } from "../../utils/api";
 
 export const BURGER_INGREDIENTS_REQUEST = "BURGER_INGREDIENTS_REQUEST";
 export const BURGER_INGREDIENTS_SUCCESS = "BURGER_INGREDIENTS_SUCCESS";

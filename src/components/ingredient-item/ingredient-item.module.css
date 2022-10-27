@@ -11,9 +11,9 @@
 
 .price {
     display: flex;
-    align-items: center;
     justify-content: center;
-}
+    align-items: center;
+   }
 
 .name {
     text-align: center;
@@ -23,7 +23,6 @@
     color: inherit;
     text-decoration: none;
     cursor: pointer;
-
 }
 .link:hover{
     opacity: 0.8;

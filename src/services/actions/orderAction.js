@@ -1,4 +1,4 @@
-import { getOrderDetailsData } from "../../utils/Api";
+import { getOrderDetailsData } from "../../utils/api";
 
 export const ORDER_DETAILS_REQUEST = "ORDER_DETAILS_REQUEST";
 export const ORDER_DETAILS_SUCCESS = "ORDER_DETAILS_SUCCESS";

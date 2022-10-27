@@ -1,9 +1,9 @@
-import React from "react";
-import styles from "./ingredients-details.module.css";
+import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
-import {useParams} from 'react-router-dom';
+import IngredientsDetailsItem from "../ingredients-details-item/ingredients-details-item";
+import style from "./ingredient-details.module.css";
 
-export default function IngredientDetails() {
+export default function IngredientDetails () {
   const { id } = useParams();
   const ingredients = useSelector(
     (state) => state.burgerIngredients.ingredients
@@ -13,28 +13,25 @@ export default function IngredientDetails() {
     <>
       {data && (
         <div
-          className={`${ingredientDetailsStyles.container} pr-25 pb-15 pl-25`}
+          className={`${style.container} pr-25 pb-15 pl-25`}
         >
           <img
-            className={`${ingredientDetailsStyles.pic}`}
+            className={`${style.pic}`}
             src={data.image_large}
             alt={data.name}
           />
           <h3
-            className={`${ingredientDetailsStyles.title} text text_type_main-medium pt-3`}
+            className={`${style.title} text text_type_main-medium pt-3`}
           >
             {data.name}
           </h3>
-          <ul className={`${ingredientDetailsStyles.list} pt-8`}>
+          <ul className={`${style.list} pt-8`}>
             <IngredientsDetailsItem
               value={data.calories}
               text="Калорийность, ккал"
             />
-
             <IngredientsDetailsItem value={data.proteins} text="Белки, г" />
-
             <IngredientsDetailsItem value={data.fat} text="Жиры, г" />
-
             <IngredientsDetailsItem
               value={data.carbohydrates}
               text="Углеводы, г"

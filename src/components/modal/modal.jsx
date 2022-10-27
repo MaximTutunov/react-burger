@@ -1,11 +1,10 @@
+import React from "react";
 import ReactDOM from "react-dom";
-import { useEffect } from "react";
 import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import ModalOverlay from "../modal-overlay/modal-overlay";
-import styles from "./modal.module.css";
 import PropTypes from "prop-types";
-
-const modalsContainer = document.querySelector("#modals");
+import style from "./modal.module.css";
+const modalWindow = document.querySelector("#modal");
 
 export default function Modal({ description, closeModal, children }) {
   React.useEffect(() => {
@@ -22,13 +21,13 @@ export default function Modal({ description, closeModal, children }) {
 
   return ReactDOM.createPortal(
     <>
-      <div className={modalStyles.container}>
+      <div className={style.container}>
         <h3
-          className={`${modalStyles.description} text text_type_main-large pt-15 pb-1 pl-10`}
+          className={`${style.description} text text_type_main-large pt-15 pb-1 pl-10`}
         >
           {description}
         </h3>
-        <button className={modalStyles.close_button}>
+        <button className={style.close_button}>
           <CloseIcon onClick={closeModal} />
         </button>
         {children}
@@ -40,7 +39,7 @@ export default function Modal({ description, closeModal, children }) {
 }
 
 Modal.propTypes = {
-  title: PropTypes.string,
-  onClose: PropTypes.func.isRequired,
-  children: PropTypes.element.isRequired,
+  closeModal: PropTypes.func.isRequired,
+  children: PropTypes.node.isRequired,
+  description: PropTypes.string,
 };

@@ -1,41 +1,53 @@
-import React, { useRef } from "react";
-import AppHeader from "../app-header/app-header";
-import BurgerIngredients from "../burger-ingredients/burger-ingredients";
-import BurgerConstructor from "../burger-constructor/burger-constructor";
-import { useEffect } from "react";
-import styles from "./app.module.css";
+import React, { useEffect, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getIngredients } from "../../services/actions/index";
-import { Switch, Route, useLocation, useHistory } from 'react-router-dom';
+import { HTML5Backend } from "react-dnd-html5-backend";
+import { DndProvider } from "react-dnd";
+import { Switch, Route, useLocation, useHistory } from "react-router-dom";
+import {
+  ForgotPassword,
+  Login,
+  NotFound404,
+  Profile,
+  Register,
+  ResetPassword,
+} from "../../pages";
+import AppHeader from "../app-header/app-header";
+import { getUser, updateToken } from "../../services/actions/authAction";
+import { ProtectedRoute } from "../protectedroute/ProtectedRoute";
+import { getCookie } from "../../utils/cookie";
+import BurgerConstructor from "../burger-constructor/burger-constructor";
+import BurgerIngredients from "../burger-ingredients/burger-ingredients";
+import Modal from "../modal/modal";
+import { getBurgerIngredients } from "../../services/actions/ingredientsAction";
+import OrderDetails from "../order-details/order-details";
+import IngredientDetails from "../ingredient-details/ingredient-details";
+import style from "./app.module.css";
+import { closeOrderModal } from "../../services/actions/orderAction";
+import { closeIngredientModal } from "../../services/actions/detailsAction";
+import { RESET_INGREDIENT } from "../../services/actions/constructorAction";
 
-
-function App() {
+export default function App() {
   const dispatch = useDispatch();
-  
-  const isLoading = useSelector((state) => state.burgerIngredients.isLoading);
-  const hasError = useSelector((state) => state.burgerIngredients.hasError);
-
   const location = useLocation();
   const history = useHistory();
   const background = location.state?.background;
   const token = localStorage.getItem("refreshToken");
+  const orderNumberModal = useSelector((state) => state.order.number);
+  const isLoading = useSelector((state) => state.burgerIngredients.isLoading);
+  const hasError = useSelector((state) => state.burgerIngredients.hasError);
   const cookie = getCookie("token");
-
-
-  const handleCloseOrderModal = useCallback(() => {
+  const handleCloseModalIngredient = useCallback(() => {
+    dispatch(closeIngredientModal());
+    history.replace("/");
+  }, [dispatch]);
+  const handleCloseModalOrder = useCallback(() => {
     dispatch(closeOrderModal());
     dispatch({ type: RESET_INGREDIENT });
   }, [dispatch]);
 
-  const handleCloseIngredientModal = useCallback(() => {
-    dispatch(closeIngredientModal());
-    history.replace("/");
-  }, [dispatch]);
-
   useEffect(() => {
     dispatch(getBurgerIngredients());
-   }, [dispatch]);
-
+  }, [dispatch]);
 
   useEffect(() => {
     if (!cookie && token) {
@@ -47,14 +59,14 @@ function App() {
   }, [dispatch, token, cookie]);
 
   return (
-    <div className={Appstyle.page}>
+    <div className={style.page}>
       <AppHeader />
       <>
         <Switch location={background || location}>
           <Route path="/" exact>
-            <main className={AppStyle.content}>
-              {isLoading && <div className={AppStyle.loader} />}
-              {hasError && "Что-то пошло не так...( Попробуйте позже!"}
+            <main className={style.content}>
+              {isLoading && <div className={style.ring} />}
+              {hasError && "Ошибка. Попробуйте еще  раз!"}
               {!isLoading && !hasError && (
                 <DndProvider backend={HTML5Backend}>
                   <BurgerIngredients />
@@ -75,7 +87,7 @@ function App() {
           <Route path="/reset-password" exact>
             <ResetPassword />
           </Route>
-        
+
           <Route path="/ingredients/:id" exact={true}>
             <IngredientDetails />
           </Route>
@@ -86,12 +98,12 @@ function App() {
             <NotFound404 />
           </Route>
         </Switch>
-        
+
         {background && (
           <Route path="/ingredients/:id" exact>
             <Modal
               description="Детали ингредиента"
-              closeModal={handleCloseIngredientModal}
+              closeModal={handleCloseModalIngredient}
             >
               <IngredientDetails />
             </Modal>
@@ -99,12 +111,10 @@ function App() {
         )}
       </>
       {orderNumberModal && (
-        <Modal description="Детали заказа" closeModal={handleCloseOrderModal}>
+        <Modal description="Детали заказа" closeModal={handleCloseModalOrder}>
           <OrderDetails />
         </Modal>
       )}
     </div>
   );
 }
-
-export default App;

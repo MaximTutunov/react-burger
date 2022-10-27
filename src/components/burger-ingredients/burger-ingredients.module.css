@@ -1,21 +1,19 @@
 .section {
+  display: flex;
+  flex-direction: column;
   width: 100%;
   max-width: 600px;
   box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-}
-
+  }
 .title {
   display: flex;
-  align-items: center;
   justify-content: flex-start;
-}
+  align-items: center;
+  }
 
 .category {
   display: flex;
 }
-
 .ingredients {
   height: calc(100vh - 324px);
   overflow-x: hidden;
@@ -23,12 +21,10 @@
   margin: 0;
   padding-left: 0;
 }
-
 .ingredients::-webkit-scrollbar {
   background-color: #2F2F37;
   width: 8px;
 }
-
 .ingredients::-webkit-scrollbar-thumb {
   background-color: #8585AD;
 }

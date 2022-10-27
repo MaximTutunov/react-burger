@@ -16,13 +16,13 @@
     margin: auto;
 }
 
-.loader{
-    margin: 100px auto;
-    width: 100px;
-    height: 100px;
+.ring{
+    margin: 300px auto;
+    width: 120px;
+    height: 120px;
     border-radius: 50%;
-    border: 4px dashed white;
-    animation: rotate 4s infinite linear;
+    border: 5px dotted #8585AD;
+    animation: rotate 5s infinite linear;
 }
 
 @keyframes rotate {
