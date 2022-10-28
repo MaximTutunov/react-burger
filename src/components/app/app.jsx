@@ -87,17 +87,27 @@ export default function App() {
           <Route path="/reset-password" exact>
             <ResetPassword />
           </Route>
-
           <Route path="/ingredients/:id" exact={true}>
             <IngredientDetails />
           </Route>
-          <ProtectedRoute path="/profile">
+
+          <Route path='/feed' exact = 'true'>
+            <Feed />
+          </Route>
+
+          <Route path='/feed/:id' exact = 'true'>
+            <OrderInfo />
+          </Route>
+
+          <ProtectedRoute path="/profile" exact>
             <Profile />
           </ProtectedRoute>
           <Route>
             <NotFound404 />
           </Route>
         </Switch>
+
+{/** */}
 
         {background && (
           <Route path="/ingredients/:id" exact>

@@ -6,7 +6,7 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink, Route, Switch } from "react-router-dom";
 import { singOut, updateUser } from "../../services/actions/authAction";
-import { Orders } from "./orders/orders";
+import { Orders } from "./orders-history/orders-history";
 import style from "./profile.module.css";
 
 export function Profile() {
