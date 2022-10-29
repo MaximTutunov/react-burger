@@ -2,7 +2,6 @@ import { useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
 import { useDrag } from "react-dnd";
-import { openIngredientModal } from "../../services/actions/detailsAction";
 import {
   Counter,
   CurrencyIcon,
@@ -32,10 +31,6 @@ export default function IngredientItem({ ingredient }) {
     [bun, items, ingredient._id]
   );
 
-  const handleOpenIngredientModal = (ingredient) => {
-    dispatch(openIngredientModal(ingredient));
-  };
-
   return (
     <Link
       className={`${style.link}`}
@@ -43,7 +38,6 @@ export default function IngredientItem({ ingredient }) {
         pathname: `/ingredients/${ingredient._id}`,
         state: { background: location },
       }}
-      onClick={() => handleOpenIngredientModal(ingredient)}
     >
       <div className={`${style.item} `} style={{ opacity }} ref={dragRef}>
         <img className={style.image} src={image} alt={name} />

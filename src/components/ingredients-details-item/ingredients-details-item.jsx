@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import style from "./ingredients-details-item.module.css";
 
-export default function IngredientsDetailsItem(data) {
+const IngredientsDetailsItem = (data) => {
   return (
     <li className={`${style.item}`}>
       <p
@@ -22,3 +22,4 @@ IngredientsDetailsItem.propTypes = {
   text: PropTypes.string.isRequired,
   value: PropTypes.number.isRequired,
 };
+export default IngredientsDetailsItem;

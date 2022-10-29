@@ -1,30 +1,28 @@
 import { useSelector } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
-import { OrdersCard } from "../../../components/orders-card/orders-card";
-import style from "./orders-history.module.css";
+import { OrdersCard } from "../orders-card/orders-card";
+import style from "./orders.module.css";
 
-export function OrdersHistory() {
+export const Orders = () => {
   const location = useLocation();
-  const orders = useSelector((store) => store.wsAuthFeed.orders);
-  orders.reverse();
-
+  const orders = useSelector((store) => store.wsFeed.orders);
   return (
     <div className={style.container}>
       {orders &&
-        orders?.map((order) => {
+        orders.map((order, index) => {
           return (
             <Link
               to={{
-                pathname: `/profile/orders/${order._id}`,
+                pathname: `/feed/${order._id}`,
                 state: { background: location },
               }}
               className={`${style.link}`}
               key={order._id}
             >
-              <OrdersCard order={order} status={true} />
+              <OrdersCard order={order} status={false} key={index} />
             </Link>
           );
         })}
     </div>
   );
-}
+};

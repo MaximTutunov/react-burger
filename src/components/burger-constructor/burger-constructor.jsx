@@ -20,17 +20,25 @@ export default function BurgerConstructor() {
   const history = useHistory();
   const dispatch = useDispatch();
   const [total, setTotal] = useState(0);
-  const { bun, items } = useSelector((state) => state.burgerConstructor);
+
+  const { bun, items, itemsId } = useSelector(
+    (state) => state.burgerConstructor
+  );
+  const { orderDetailsRequest } = useSelector((state) => state.order);
+
   const cookie = getCookie("token");
+
   const filling = useMemo(
     () => items.filter((item) => item.type !== "bun"),
     [items]
   );
-  const itemsId = useMemo(() => items.map((item) => item._id), [items]);
+
   const orderDetailsModal = (itemsId) => {
     cookie && dispatch(getOrderDetails(itemsId));
     !cookie && history.push("/login");
+    
   };
+
   useEffect(() => {
     const totalPrice = filling.reduce(
       (sum, item) => sum + item.price,
@@ -67,6 +75,7 @@ export default function BurgerConstructor() {
           </p>
         ) : (
           <ConstructorElement
+            key={bun._id}
             type="top"
             isLocked={true}
             text={bun.name + "(верх)"}
@@ -74,11 +83,12 @@ export default function BurgerConstructor() {
             thumbnail={bun.image}
           />
         )}
+
         {items.length === 0 ? (
           <p
             className={`${style.maininitial} ${style.listmain} ${style.text} pr-2 text text_type_main-large text_color_inactive`}
           >
-            Перенесите начинку
+            Перенесите начинку 
           </p>
         ) : (
           <ul className={`${style.list} pr-4`}>
@@ -100,10 +110,11 @@ export default function BurgerConstructor() {
           <p
             className={`${style.buninitial} text text_type_main-large pr-2 text_color_inactive`}
           >
-            Перенесите булочку
+            Перенесите булочку 
           </p>
         ) : (
           <ConstructorElement
+            key={`bottom: ${bun._id}`}
             type="bottom"
             isLocked={true}
             text={bun.name + "(низ)"}
@@ -117,7 +128,7 @@ export default function BurgerConstructor() {
           <p className="text text_type_digits-medium pr-2">{total}</p>
           <CurrencyIcon type="primary" />
         </div>
-        {items.length === 0 ? (
+        {items.length === 0 || !!orderDetailsRequest ? (
           <Button
             type="primary"
             size="large"
@@ -126,7 +137,12 @@ export default function BurgerConstructor() {
             }}
             disabled
           >
-            Оформить заказ
+            {orderDetailsRequest ? (
+                <div className={style.loader} />
+
+            ) : (
+              "Оформить заказ"
+            )}
           </Button>
         ) : (
           <Button
@@ -142,4 +158,5 @@ export default function BurgerConstructor() {
       </div>
     </section>
   );
+ 
 }

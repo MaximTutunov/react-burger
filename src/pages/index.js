@@ -5,6 +5,7 @@ import { Profile } from "./profile/profile";
 import { Register } from "./registration/registration";
 import { ResetPassword } from "./resetPassword/resetPassword";
 import { OrdersHistory } from "./profile/orders-history/orders-history";
+import { Feed } from "./feed/feed";
 
 export {
   ForgotPassword,
@@ -14,5 +15,5 @@ export {
   Profile,
   Register,
   ResetPassword,
-  
+  Feed,
 };

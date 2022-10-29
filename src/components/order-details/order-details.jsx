@@ -1,6 +1,7 @@
 import { useSelector } from "react-redux";
 import acceptedImg from "../../images/AcceptedIcon.svg";
 import style from "./order-details.module.css";
+
 export default function OrderDetails () {
   const orderNumber = useSelector((store) => store.order.number);
   return (

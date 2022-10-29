@@ -15,7 +15,9 @@ export function Login () {
   const { email, password } = useSelector((state) => state.authorization.form);
   const cookie = getCookie("token");
 
-
+  const requestLogin = useSelector((state) => state.authorization.loginRequest);
+  const errorLogin = useSelector((state) => state.authorization.loginFailed);
+  
   function onSubmit(evt) {
     evt.preventDefault();
     dispatch(singIn(email, password));
@@ -31,7 +33,12 @@ export function Login () {
 
   return (
     <div className={style.container}>
-      <h2 className={`${style.title} pb-6 text_type_main-medium text`}>Вход</h2>
+      <h2 className={`${style.title} pb-6 text_type_main-medium text`}>
+        Вход
+      </h2>
+      {requestLogin ? (
+                <div className={style.ring} />
+            ) : (
       <form className={style.form} onSubmit={onSubmit}>
         <div className="pb-5">
           <EmailInput
@@ -49,10 +56,21 @@ export function Login () {
             size="default"
           />
         </div>
-        <Button disabled={!password || !email} type="primary" size="medium">
-          Войти
+        
+              <Button disabled={!password || !email} type="primary" size="medium">
+        Войти
         </Button>
+
+            
+        
+        {errorLogin ? (
+        <p className={style.error}
+        >Не правильный логин или пароль, повторите попытку</p>
+      ) : (
+        null
+      )}
       </form>
+      )}
       <p className="pt-20 pb-4 text_type_main-default text_color_inactive text">
         Вы — новый пользователь?
         <Link className={style.link} to="/register">
