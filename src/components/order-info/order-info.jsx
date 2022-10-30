@@ -3,7 +3,6 @@ import { useSelector, useDispatch } from "react-redux";
 import { useParams, useRouteMatch } from "react-router-dom";
 import { OrderInfoDetails } from "../order-info-details/order-info-details";
 import { formatDate } from "../../utils/cookie";
-import uniqid from "uniqid";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 
 import {
@@ -99,7 +98,7 @@ export const OrderInfo = () => {
               <p className="text text_type_digits-default pr-2">
                 {orderTotalPrice}
               </p>
-              <CurrencyIcon type="primary" key={uniqid()} />
+              <CurrencyIcon type="primary" key={order._id} />
             </div>
           </div>
         </div>

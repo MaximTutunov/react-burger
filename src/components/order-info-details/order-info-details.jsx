@@ -34,7 +34,7 @@ export const OrderInfoDetails = ({ details }) => {
           return (
             <li
               className={`${style.item} pb-3`}
-              key={uniqid()}
+              key={item._id}
             >
               {item && (
                 <>
@@ -42,8 +42,8 @@ export const OrderInfoDetails = ({ details }) => {
                     <OrderImage
                       image={item.image}
                       alt={item.name}
-                      key={uniqid()}
-                    />
+                      key={item._id}
+              />
                     <p
                       className={`${style.text} text text_type_main-default pl-4`}
                     >
@@ -57,7 +57,7 @@ export const OrderInfoDetails = ({ details }) => {
                         ? `${count(item) * 2} x ${item.price}`
                         : `${count(item)} x ${item.price}`}
                     </p>
-                    <CurrencyIcon type="primary" key={uniqid()} />
+                    <CurrencyIcon type="primary"  />
                   </div>
                 </>
               )}

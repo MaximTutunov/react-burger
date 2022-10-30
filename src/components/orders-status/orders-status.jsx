@@ -1,10 +1,8 @@
 import { useSelector } from "react-redux";
-import uniqid from "uniqid";
 import style from "./orders-status.module.css";
 
 export const OrdersStatus = () => {
-    const ItemId = uniqid();
- 
+     
     const { total, totalToday, orders } = useSelector((store) => store.wsFeed);
  
   const doneStatusOrder = orders
@@ -21,11 +19,11 @@ export const OrdersStatus = () => {
         <div className={style.column}>
           <p className=" pb-6 text_type_main-medium text">Готовы:</p>
           <ul className={style.list}>
-            {doneStatusOrder.map((order, index) => {
+            {doneStatusOrder.map((order) => {
               return (
                 <li
                   className={`${style.item} ${style.done} text text_type_digits-default`}
-                  key={ItemId + index}
+                  key={order._id}
                 >
                   {order.number}
                 </li>
@@ -36,11 +34,11 @@ export const OrdersStatus = () => {
         <div className={style.column}>
           <p className=" pb-6 text_type_main-medium text">В работе:</p>
           <ul className={style.list}>
-            {pendingStatusOrder.map((order, index) => {
+            {pendingStatusOrder.map((order) => {
               return (
                 <li
                   className={`${style.item} text text_type_digits-default`}
-                  key={ItemId + index}
+                  key={order._id}
                 >
                   {order.number}
                 </li>
