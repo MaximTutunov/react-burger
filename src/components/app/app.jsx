@@ -2,7 +2,13 @@ import React, { useEffect, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { DndProvider } from "react-dnd";
-import { Switch, Route, useLocation, useHistory } from "react-router-dom";
+import {
+  Switch,
+  Route,
+  useLocation,
+  useHistory,
+  useRouteMatch,
+} from "react-router-dom";
 import {
   ForgotPassword,
   Login,
@@ -10,6 +16,7 @@ import {
   Profile,
   Register,
   ResetPassword,
+  Feed,
 } from "../../pages";
 import AppHeader from "../app-header/app-header";
 import { getUser, updateToken } from "../../services/actions/authAction";
@@ -25,6 +32,8 @@ import style from "./app.module.css";
 import { closeOrderModal } from "../../services/actions/orderAction";
 import { closeIngredientModal } from "../../services/actions/detailsAction";
 import { RESET_INGREDIENT } from "../../services/actions/constructorAction";
+import { OrderInfo } from "../order-info/order-info";
+import { closeOrderInfoModal } from "../../services/actions/orderInfoModCloseAction";
 
 export default function App() {
   const dispatch = useDispatch();
@@ -36,13 +45,21 @@ export default function App() {
   const isLoading = useSelector((state) => state.burgerIngredients.isLoading);
   const hasError = useSelector((state) => state.burgerIngredients.hasError);
   const cookie = getCookie("token");
+  const idOrderInfo = useRouteMatch(["/profile/orders/:id", "/feed/:id"])
+    ?.params?.id;
   const handleCloseModalIngredient = useCallback(() => {
     dispatch(closeIngredientModal());
     history.replace("/");
   }, [dispatch]);
+
   const handleCloseModalOrder = useCallback(() => {
     dispatch(closeOrderModal());
     dispatch({ type: RESET_INGREDIENT });
+  }, [dispatch]);
+
+  const handleCloseOrderInfoModal = useCallback(() => {
+    dispatch(closeOrderInfoModal());
+    history.goBack();
   }, [dispatch]);
 
   useEffect(() => {
@@ -60,61 +77,87 @@ export default function App() {
 
   return (
     <div className={style.page}>
-      <AppHeader />
-      <>
-        <Switch location={background || location}>
-          <Route path="/" exact>
-            <main className={style.content}>
-              {isLoading && <div className={style.ring} />}
-              {hasError && "Ошибка. Попробуйте еще  раз!"}
-              {!isLoading && !hasError && (
-                <DndProvider backend={HTML5Backend}>
-                  <BurgerIngredients />
-                  <BurgerConstructor />
-                </DndProvider>
-              )}
-            </main>
-          </Route>
-          <Route path="/login" exact>
-            <Login />
-          </Route>
-          <Route path="/register" exact>
-            <Register />
-          </Route>
-          <Route path="/forgot-password" exact>
-            <ForgotPassword />
-          </Route>
-          <Route path="/reset-password" exact>
-            <ResetPassword />
-          </Route>
+    <AppHeader />
+    <>
+      <Switch location={background || location}>
+        <Route path="/" exact>
+          <main className={style.content}>
+            {isLoading && <div className={style.loader} />}
+            {hasError && "Что-то пошло не так...( Попробуйте позже!"}
+            {!isLoading && !hasError && (
+              <DndProvider backend={HTML5Backend}>
+                <BurgerIngredients />
+                <BurgerConstructor />
+              </DndProvider>
+            )}
+          </main>
+        </Route>
+        <Route path="/login" exact>
+          <Login />
+        </Route>
+        <Route path="/register" exact>
+          <Register />
+        </Route>
+        <Route path="/forgot-password" exact>
+          <ForgotPassword />
+        </Route>
+        <Route path="/reset-password" exact>
+          <ResetPassword />
+        </Route>
 
-          <Route path="/ingredients/:id" exact={true}>
+        <Route path="/ingredients/:id" exact>
+          <IngredientDetails />
+        </Route>
+
+        <Route path="/feed" exact>
+          <Feed />
+        </Route>
+        <Route path="/feed/:id" exact>
+          <OrderInfo />
+        </Route>
+
+        <ProtectedRoute path="/profile">
+          <Profile />
+        </ProtectedRoute>
+        <ProtectedRoute path="/profile/orders/:id">
+          <OrderInfo />
+        </ProtectedRoute>
+        <Route>
+          <NotFound404 />
+        </Route>
+      </Switch>
+
+      {background && (
+        <Route path="/ingredients/:id" exact>
+          <Modal
+            description="Детали ингредиента"
+            closeModal={handleCloseModalIngredient}
+          >
             <IngredientDetails />
-          </Route>
-          <ProtectedRoute path="/profile">
-            <Profile />
-          </ProtectedRoute>
-          <Route>
-            <NotFound404 />
-          </Route>
-        </Switch>
-
-        {background && (
-          <Route path="/ingredients/:id" exact>
-            <Modal
-              description="Детали ингредиента"
-              closeModal={handleCloseModalIngredient}
-            >
-              <IngredientDetails />
-            </Modal>
-          </Route>
-        )}
-      </>
-      {orderNumberModal && (
-        <Modal description="Детали заказа" closeModal={handleCloseModalOrder}>
-          <OrderDetails />
-        </Modal>
+          </Modal>
+        </Route>
       )}
-    </div>
-  );
+      {background && idOrderInfo && (
+        <ProtectedRoute path="/profile/orders/:id" exact>
+          <Modal description="" closeModal={handleCloseOrderInfoModal}>
+            <OrderInfo />
+          </Modal>
+        </ProtectedRoute>
+      )}
+      {background && idOrderInfo && (
+        <Route path="/feed/:id" exact>
+          <Modal description="" closeModal={handleCloseOrderInfoModal}>
+            <OrderInfo />
+          </Modal>
+        </Route>
+      )}
+    </>
+    {orderNumberModal && (
+      <Modal description="" closeModal={handleCloseModalOrder}>
+        <OrderDetails />
+      </Modal>
+    )}
+  </div>
+);
+  
 }

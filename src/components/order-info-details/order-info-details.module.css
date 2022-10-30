@@ -1,0 +1,40 @@
+.container {
+  padding-right: 24px;
+  height: 25vh;
+  min-height: 70%;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+.container::-webkit-scrollbar {
+  width: 8px;
+  height: auto;
+  background-color: #2f2f37;
+}
+.container::-webkit-scrollbar-thumb {
+  background-color: #8585ad;
+}
+
+.text {
+  max-width: 320px;
+  text-align: left;
+}
+
+.info {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.item {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  max-width: 100%;
+  justify-content: space-between;
+}
+
+.price {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}

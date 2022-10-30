@@ -1,0 +1,28 @@
+.item {
+  width: 64px;
+  height: 64px;
+  border-radius: 100px;
+  box-sizing: border-box;
+  background: #131316;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.border {
+  display: flex;
+  flex-direction: row;
+  border-radius: 100px;
+  background: linear-gradient(
+    to right,
+    rgba(128, 26, 178, 1),
+    rgba(76, 76, 255, 1)
+  );
+  padding: 2px;
+}

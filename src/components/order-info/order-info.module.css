@@ -1,0 +1,44 @@
+.container {
+    background: #1c1c21;
+    max-width: 640px;
+    width: 100%;
+    margin: 30px auto;
+    padding: 10px;
+    border-radius: 40px;
+  }
+  
+  .total {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+  
+  .price {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+  
+  .list {
+    display: flex;
+    flex-direction: column;
+    padding: 24px 0 40px 0;
+    margin: 0;
+    list-style: none;
+  }
+  
+  
+  .status {
+    color: #00cccc;
+    text-align: left;
+  }
+  
+  .name {
+    text-align: left;
+    width: 100%;
+  }
+  
+  .order {
+    text-align: left;
+  }
+  

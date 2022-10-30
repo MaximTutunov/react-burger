@@ -3,14 +3,33 @@ import {
   Button,
   Input,
 } from "@ya.praktikum/react-developer-burger-ui-components";
+import {
+  wsAuthConnectionClosed,
+  wsAuthConnectionOpen,
+} from "../../services/actions/wsAuthAction";
 import { useDispatch, useSelector } from "react-redux";
-import { NavLink, Route, Switch } from "react-router-dom";
-import { singOut, updateUser } from "../../services/actions/authAction";
-import { Orders } from "./orders/orders";
+import { OrdersHistory } from "./orders-history/orders-history";
+import {
+  NavLink,
+  Route,
+  useLocation,
+  useRouteMatch,
+  Switch,
+} from "react-router-dom";
+import {
+  singOut,
+  updateUser,
+  getUser,
+} from "../../services/actions/authAction";
+import { Orders } from "./orders-history/orders-history";
+import { OrderInfo } from "../../components/order-info/order-info";
 import style from "./profile.module.css";
 
 export function Profile() {
   const dispatch = useDispatch();
+  const location = useLocation();
+  const background = location.state?.background;
+  const matchOrderDetails = !!useRouteMatch({ path: "/profile/orders/:id" });
   const { email, name } = useSelector((state) => state.authorization.user);
   const [form, setForm] = useState({
     email: "",
@@ -30,6 +49,13 @@ export function Profile() {
     evt.preventDefault();
     dispatch(updateUser(form.email, form.name, form.password));
   }
+  useEffect(() => {
+    dispatch(getUser());
+    dispatch(wsAuthConnectionOpen());
+    return () => {
+      dispatch(wsAuthConnectionClosed());
+    };
+  }, [dispatch]);
 
   useEffect(() => {
     setForm({
@@ -50,51 +76,56 @@ export function Profile() {
 
   return (
     <div className={`${style.container} pt-30`}>
-      <nav className={`${style.nav} pr-15`}>
-        <ul className={`${style.items}`}>
-          <li className={`${style.item}`}>
-            <NavLink
-              to="/profile"
-              exact
-              className={`${style.link} text_type_main-medium text_color_inactive text`}
-              activeClassName={`${style.linkActive} text_type_main-medium text`}
-            >
-              Профиль
-            </NavLink>
-          </li>
-          <li className={`${style.item}`}>
-            <NavLink
-              to="/profile/orders"
-              exact
-              className={`${style.link} text_type_main-medium text_color_inactive text`}
-              activeClassName={`${style.linkActive} text_type_main-medium text`}
-            >
-              История заказов
-            </NavLink>
-          </li>
-          <li className={`${style.item}`}>
-            <NavLink
-              to="/login"
-              exact
-              className={`${style.link} text_type_main-medium text_color_inactive text`}
-              activeClassName={`${style.linkActive} text_type_main-medium text`}
-              onClick={onSingOut}
-            >
-              Выход
-            </NavLink>
-          </li>
-        </ul>
-        <p
-          className={`${style.description} pt-20 pb-4 text_type_main-default text_color_inactive text`}
-        >
-          В этом разделе вы можете изменить свои персональные данные
-        </p>
-      </nav>
-      <Switch>
+      {!matchOrderDetails && (
+        <nav className={`${style.nav} pr-15`}>
+          <ul className={`${style.items}`}>
+            <li className={`${style.item}`}>
+              <NavLink
+                to="/profile"
+                exact
+                className={`${style.link} text_type_main-medium text_color_inactive text`}
+                activeClassName={`${style.linkActive} text_type_main-medium text`}
+              >
+                Профиль
+              </NavLink>
+            </li>
+            <li className={`${style.item}`}>
+              <NavLink
+                to="/profile/orders"
+                exact
+                className={`${style.link} text_type_main-medium text_color_inactive text`}
+                activeClassName={`${style.linkActive} text_type_main-medium text`}
+              >
+                История заказов
+              </NavLink>
+            </li>
+            <li className={`${style.item}`}>
+              <NavLink
+                to="/login"
+                exact
+                className={`${style.link} text_type_main-medium text_color_inactive text`}
+                activeClassName={`${style.linkActive} text_type_main-medium text`}
+                onClick={onSingOut}
+              >
+                Выход
+              </NavLink>
+            </li>
+          </ul>
+          <p
+            className={`${style.description} pt-20 pb-4 text_type_main-default text_color_inactive text`}
+          >
+            В этом разделе вы можете изменить свои персональные данные
+          </p>
+        </nav>
+      )}
+      <Switch location={background || location}>
         <Route path="/profile/orders" exact>
-          <Orders />
+          <OrdersHistory />
         </Route>
-        <Route path="/profile" exact>
+        <Route path="/profile/orders/:id" exact>
+          <OrderInfo />
+        </Route>
+        <Route exact path="/profile">
           <form className={style.form} onSubmit={submit}>
             <div className="pb-6">
               <Input
