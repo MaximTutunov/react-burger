@@ -9,7 +9,7 @@ import {
   updateTokenRequest,
 } from "../../utils/api";
 import { deleteCookie, setCookie } from "../../utils/cookie";
-import { TUser } from "../types";
+import { AppDispatch, TUser, AppThunk } from "../types";
 
 export const FORGOT_PASSWORD_REQUEST: "FORGOT_PASSWORD_REQUEST" =
   "FORGOT_PASSWORD_REQUEST";
@@ -101,6 +101,29 @@ interface IForgotPasswordFailed {
   readonly type: typeof FORGOT_PASSWORD_FAILED;
 }
 
+export const forgotPassword: AppThunk =(email:string) =>
+ {
+  return function (dispatch: AppDispatch) {
+    dispatch({
+      type: FORGOT_PASSWORD_REQUEST,
+    });
+    forgotPassRequest(email)
+      .then((res) => {
+        dispatch({
+          type: FORGOT_PASSWORD_SUCCESS,
+          message: res.message,
+        });
+      })
+      .catch(() => {
+        dispatch({
+          type: FORGOT_PASSWORD_FAILED,
+        });
+      });
+  };
+}
+
+
+
 interface IGetUserRequest {
   readonly type: typeof GET_USER_REQUEST;
 }
@@ -190,25 +213,7 @@ interface IUpdateTokenFailed {
   readonly type: typeof UPDATE_TOKEN_FAILED;
 }
 
-export function forgotPassword(email) {
-  return function (dispatch) {
-    dispatch({
-      type: FORGOT_PASSWORD_REQUEST,
-    });
-    forgotPassRequest(email)
-      .then((res) => {
-        dispatch({
-          type: FORGOT_PASSWORD_SUCCESS,
-          message: res.message,
-        });
-      })
-      .catch(() => {
-        dispatch({
-          type: FORGOT_PASSWORD_FAILED,
-        });
-      });
-  };
-}
+
 
 export const setResetFormValue = (field, value) => ({
   type: RESET_FORM_SET_VALUE,
