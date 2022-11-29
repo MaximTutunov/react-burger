@@ -271,7 +271,7 @@ export const authReducer = (state = initialState, action:TAuthActions):TInitialS
     case REGISTER_FORM_SUCCESS: {
       return {
         ...state,
-        user: action.form,
+        user: action.user,
         form: {
           ...state.form,
           email: "",

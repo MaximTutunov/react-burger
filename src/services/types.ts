@@ -57,6 +57,7 @@ export type TIngredients ={
     name: string;
     price: number;
     proteins: number;
+    length: number
 }
 
 export type TOrders = {

@@ -209,7 +209,7 @@ export const singOut: AppThunk = () => {
       .then((res) => {
         const refreshToken = res.refreshToken;
         deleteCookie("token");
-        localStorage.removeItem("refreshToken", refreshToken);
+        localStorage.removeItem( refreshToken);
         if (res && res.success) {
           dispatch({
             type: LOGOUT_FORM_SUCCESS,
