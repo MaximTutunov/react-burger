@@ -1,19 +1,28 @@
-import { CLOSE_ORDER_INFO_MODAL } from "../actions/orderInfoModCloseAction";
+import {
+  CLOSE_ORDER_INFO_MODAL,
+  TCloseOrderInfoModalAction,
+} from "../actions/orderInfoModCloseAction";
 
-const orderInfoInitialState = {
-	openModal: null
+type TorderInfoInitialState = {
+  openModal: null | string;
+};
+const orderInfoInitialState: TorderInfoInitialState = {
+  openModal: null,
 };
 
-export const orderInfoReducer = (state = orderInfoInitialState, action) => {
-	switch (action.type) {
-		case CLOSE_ORDER_INFO_MODAL: {
-			return {
-				...state,
-				openModal: null,
-			};
-		}
-		default: {
-			return state;
-		}
-	}
+export const orderInfoReducer = (
+  state = orderInfoInitialState,
+  action: TCloseOrderInfoModalAction
+): TorderInfoInitialState => {
+  switch (action.type) {
+    case CLOSE_ORDER_INFO_MODAL: {
+      return {
+        ...state,
+        openModal: null,
+      };
+    }
+    default: {
+      return state;
+    }
+  }
 };
