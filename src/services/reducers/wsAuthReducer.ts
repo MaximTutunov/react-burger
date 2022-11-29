@@ -2,10 +2,20 @@ import {
     WS_AUTH_CONNECTION_SUCCESS,
     WS_AUTH_CONNECTION_ERROR,
     WS_AUTH_CONNECTION_CLOSED,
-    WS_AUTH_GET_ORDERS
+    WS_AUTH_GET_ORDERS,
+    TWsAuthActions
   } from "../actions/wsAuthAction";
+import { TFeed } from "../types";
   
-  const initialState = {
+  type TinitialState = {
+    wsConnected: boolean,
+    orders: TFeed[],
+    total: number,
+    totalToday: number,
+    wsError: boolean
+  };
+ 
+  const initialState:TinitialState = {
     wsConnected: false,
     orders: [],
     total: 0,
@@ -13,7 +23,7 @@ import {
     wsError: false
   };
   
-  export const wsAuthReducer = (state = initialState, action) => {
+  export const wsAuthReducer = (state = initialState, action:TWsAuthActions):TinitialState => {
     switch (action.type) {
       case WS_AUTH_CONNECTION_SUCCESS:
         return {
