@@ -1,10 +1,15 @@
-import { CLOSE_INGREDIENT_MODAL } from "../actions/detailsAction";
+import { CLOSE_INGREDIENT_MODAL, TCloseIngredientModalAction } from "../actions/detailsAction";
+import { TIngredients } from "../types";
+
+type TingredientInitialState = {
+  openModal: string|null|TIngredients,
+};
 
 const ingredientInitialState = {
   openModal: null,
 };
 
-export const detailsReducer = (state = ingredientInitialState, action) => {
+export const detailsReducer = (state = ingredientInitialState, action:TCloseIngredientModalAction):TingredientInitialState => {
   switch (action.type) {
     case CLOSE_INGREDIENT_MODAL: {
       return {
