@@ -1,36 +1,74 @@
+import {TUser} from '../types';
+import { TAuthActions } from '../actions/authAction';
 import {
-  FORGOT_PASSWORD_FAILED,
   FORGOT_PASSWORD_REQUEST,
   FORGOT_PASSWORD_SUCCESS,
-  GET_USER_FAILED,
+  FORGOT_PASSWORD_FAILED,
+
   GET_USER_REQUEST,
   GET_USER_SUCCESS,
-  LOGIN_FORM_FAILED,
-  LOGIN_FORM_REQUEST,
+  GET_USER_FAILED,
+
   LOGIN_FORM_SET_VALUE,
+  LOGIN_FORM_REQUEST,
   LOGIN_FORM_SUCCESS,
-  LOGOUT_FORM_FAILED,
+  LOGIN_FORM_FAILED,
+   
   LOGOUT_FORM_REQUEST,
   LOGOUT_FORM_SUCCESS,
-  PATCH_USER_FAILED,
+  LOGOUT_FORM_FAILED,
+  
   PATCH_USER_REQUEST,
   PATCH_USER_SUCCESS,
-  REGISTER_FORM_FAILED,
-  REGISTER_FORM_REQUEST,
+  PATCH_USER_FAILED,
+  
   REGISTER_FORM_SET_VALUE,
+  REGISTER_FORM_REQUEST,
   REGISTER_FORM_SUCCESS,
+  REGISTER_FORM_FAILED,
+      
   RESET_FORM_SET_VALUE,
-  RESET_PASSWORD_FAILED,
   RESET_PASSWORD_REQUEST,
   RESET_PASSWORD_SUCCESS,
-  UPDATE_TOKEN_FAILED,
+  RESET_PASSWORD_FAILED,
+ 
   UPDATE_TOKEN_REQUEST,
   UPDATE_TOKEN_SUCCESS,
+  UPDATE_TOKEN_FAILED, 
 } from "../actions/authAction";
 
-const initialState = {
-  message: "",
+type TInitialState = {
+  message: string,
 
+  form: {
+    email:string,
+    password: string,
+    code: string,
+    name: string,
+  },
+  user: TUser,
+  forgotPassRequest: boolean,
+  forgotPassFailed: boolean,
+  forgotPassSuccess: boolean,
+  resetPassRequest: boolean,
+  resetPassFailed: boolean,
+  resetPassSuccess: boolean,
+  loginRequest: boolean,
+  loginFailed: boolean,
+  loginSuccess: boolean,
+  logoutRequest: boolean,
+  logoutFailed: boolean,
+  getUserRequest: boolean,
+  getUserFailed: boolean,
+  updateUserRequest: boolean,
+  updateUserFailed: boolean,
+  updateTokenRequest: boolean,
+  updateTokenSuccess: boolean,
+  updateTokenFailed: boolean,
+};
+
+const initialState:TInitialState = {
+  message: "",
   form: {
     email: "",
     password: "",
@@ -42,34 +80,27 @@ const initialState = {
     email: "",
     name: "",
   },
-
   forgotPassRequest: false,
   forgotPassFailed: false,
   forgotPassSuccess: false,
-
   resetPassRequest: false,
   resetPassFailed: false,
   resetPassSuccess: false,
-
   loginRequest: false,
   loginFailed: false,
   loginSuccess: false,
-
   logoutRequest: false,
   logoutFailed: false,
-
   getUserRequest: false,
   getUserFailed: false,
-
   updateUserRequest: false,
   updateUserFailed: false,
-
   updateTokenRequest: false,
   updateTokenSuccess: false,
   updateTokenFailed: false,
 };
 
-export const authorizationReducer = (state = initialState, action) => {
+export const authReducer = (state = initialState, action:TAuthActions):TInitialState => {
   switch (action.type) {
     case GET_USER_REQUEST: {
       return {

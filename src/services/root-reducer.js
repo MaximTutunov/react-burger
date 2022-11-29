@@ -2,7 +2,7 @@ import { constructorReducer } from "./reducers/constructorReducer";
 import { ingredientsReducer } from "./reducers/ingredientsReducer";
 import { detailsReducer } from "./reducers/detailsReducer";
 import { orderReducer } from "./reducers/orderReducer";
-import { authorizationReducer } from "./reducers/authReducer";
+import { authReducer } from "./reducers/authReducer";
 import { orderInfoReducer } from "./reducers/orderInfoReducer";
 import { combineReducers } from "redux";
 import { wsReducer } from "./reducers/wsReducer";
@@ -13,7 +13,7 @@ export const rootReducer = combineReducers({
 	burgerIngredients: ingredientsReducer,
 	ingredientDetails: detailsReducer,
 	order: orderReducer,
-	authorization: authorizationReducer,
+	authorization: authReducer,
 	orderInfo: orderInfoReducer,
 	wsFeed: wsReducer,
 	wsAuthFeed: wsAuthReducer,

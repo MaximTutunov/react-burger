@@ -1,15 +1,15 @@
+import { deleteCookie, setCookie } from "../../utils/cookie";
+import { AppDispatch, TUser, AppThunk } from "../types";
 import {
-  forgotPassRequest,
   getUserRequest,
+  forgotPassRequest,
+  updateUserRequest,
+  resetPassRequest,
   loginRequest,
   logoutRequest,
-  resetPassRequest,
-  updateUserRequest,
   registerUserRequest,
   updateTokenRequest,
 } from "../../utils/api";
-import { deleteCookie, setCookie } from "../../utils/cookie";
-import { AppDispatch, TUser, AppThunk } from "../types";
 
 export const FORGOT_PASSWORD_REQUEST: "FORGOT_PASSWORD_REQUEST" =
   "FORGOT_PASSWORD_REQUEST";
@@ -60,7 +60,7 @@ export const UPDATE_TOKEN_SUCCESS: "UPDATE_TOKEN_SUCCESS" =
   "UPDATE_TOKEN_SUCCESS";
 export const UPDATE_TOKEN_FAILED: "UPDATE_TOKEN_FAILED" = "UPDATE_TOKEN_FAILED";
 
-export type TAuthorisationActions =
+export type TAuthActions =
   | IForgotPasswordRequest
   | IForgotPasswordSuccess
   | IForgotPasswordFailed
@@ -89,7 +89,6 @@ export type TAuthorisationActions =
   | IUpdateTokenSuccess
   | IUpdateTokenFailed;
 
-
 interface IForgotPasswordRequest {
   readonly type: typeof FORGOT_PASSWORD_REQUEST;
 }
@@ -100,8 +99,7 @@ interface IForgotPasswordSuccess {
 interface IForgotPasswordFailed {
   readonly type: typeof FORGOT_PASSWORD_FAILED;
 }
-export const forgotPassword: AppThunk =(email:string) =>
- {
+export const forgotPassword: AppThunk = (email: string) => {
   return function (dispatch: AppDispatch) {
     dispatch({
       type: FORGOT_PASSWORD_REQUEST,
@@ -119,9 +117,7 @@ export const forgotPassword: AppThunk =(email:string) =>
         });
       });
   };
-}
-
-
+};
 
 interface IGetUserRequest {
   readonly type: typeof GET_USER_REQUEST;
@@ -133,8 +129,8 @@ interface IGetUserSuccess {
 interface IGetUserFailed {
   readonly type: typeof GET_USER_FAILED;
 }
-export const  getUser:AppThunk=() => {
-  return function (dispatch:AppDispatch) {
+export const getUser: AppThunk = () => {
+  return function (dispatch: AppDispatch) {
     dispatch({
       type: GET_USER_REQUEST,
     });
@@ -151,9 +147,7 @@ export const  getUser:AppThunk=() => {
         });
       });
   };
-}
-
-
+};
 
 interface ILoginFormSetValue {
   readonly type: typeof LOGIN_FORM_SET_VALUE;
@@ -170,8 +164,8 @@ interface ILoginFormSuccess {
 interface ILoginFormFailed {
   readonly type: typeof LOGIN_FORM_FAILED;
 }
-export const singIn:AppThunk=(email:string, password:string)=> {
-  return function (dispatch:AppDispatch) {
+export const singIn: AppThunk = (email: string, password: string) => {
+  return function (dispatch: AppDispatch) {
     dispatch({
       type: LOGIN_FORM_REQUEST,
     });
@@ -195,8 +189,7 @@ export const singIn:AppThunk=(email:string, password:string)=> {
         });
       });
   };
-}
-
+};
 
 interface ILogoutFormRequest {
   readonly type: typeof LOGOUT_FORM_REQUEST;
@@ -207,8 +200,8 @@ interface ILogoutFormSuccess {
 interface ILogoutFormFailed {
   readonly type: typeof LOGOUT_FORM_FAILED;
 }
-export const singOut: AppThunk =()=>{
-  return function (dispatch:AppDispatch) {
+export const singOut: AppThunk = () => {
+  return function (dispatch: AppDispatch) {
     dispatch({
       type: LOGOUT_FORM_REQUEST,
     });
@@ -231,8 +224,7 @@ export const singOut: AppThunk =()=>{
         });
       });
   };
-}
-
+};
 
 interface IPatchUserRequest {
   readonly type: typeof PATCH_USER_REQUEST;
@@ -244,8 +236,12 @@ interface IPatchUserSuccess {
 interface IPatchUserFailed {
   readonly type: typeof PATCH_USER_FAILED;
 }
-export const updateUser:AppThunk=(email:string, name:string, password:string) =>{
-  return function (dispatch:AppDispatch) {
+export const updateUser: AppThunk = (
+  email: string,
+  name: string,
+  password: string
+) => {
+  return function (dispatch: AppDispatch) {
     dispatch({
       type: PATCH_USER_REQUEST,
     });
@@ -262,10 +258,7 @@ export const updateUser:AppThunk=(email:string, name:string, password:string) =>
         });
       });
   };
-}
-
-
-
+};
 
 interface IRegisterFormSetValue {
   readonly type: typeof REGISTER_FORM_SET_VALUE;
@@ -282,8 +275,12 @@ interface IRegisterFormRequest {
 interface IRegisterFormFailed {
   readonly type: typeof REGISTER_FORM_FAILED;
 }
-export const registerUser:AppThunk=(email:string, password:string, name:string) => {
-  return function (dispatch:AppDispatch) {
+export const registerUser: AppThunk = (
+  email: string,
+  password: string,
+  name: string
+) => {
+  return function (dispatch: AppDispatch) {
     dispatch({
       type: REGISTER_FORM_REQUEST,
     });
@@ -307,9 +304,7 @@ export const registerUser:AppThunk=(email:string, password:string, name:string) 
         });
       });
   };
-}
-
-
+};
 
 interface IResetFormSetValue {
   readonly type: typeof RESET_FORM_SET_VALUE;
@@ -325,8 +320,8 @@ interface IResetPasswordSuccess {
 interface IResetPasswordFailed {
   readonly type: typeof RESET_PASSWORD_FAILED;
 }
-export const resetPassword:AppThunk=(password:string, token:string)=> {
-  return function (dispatch:AppDispatch) {
+export const resetPassword: AppThunk = (password: string, token: string) => {
+  return function (dispatch: AppDispatch) {
     dispatch({
       type: RESET_PASSWORD_REQUEST,
     });
@@ -342,8 +337,7 @@ export const resetPassword:AppThunk=(password:string, token:string)=> {
         });
       });
   };
-}
-
+};
 
 interface IUpdateTokenRequest {
   readonly type: typeof UPDATE_TOKEN_REQUEST;
@@ -354,8 +348,8 @@ interface IUpdateTokenSuccess {
 interface IUpdateTokenFailed {
   readonly type: typeof UPDATE_TOKEN_FAILED;
 }
-export const updateToken:AppThunk=()=> {
-  return function (dispatch:AppDispatch) {
+export const updateToken: AppThunk = () => {
+  return function (dispatch: AppDispatch) {
     dispatch({ type: UPDATE_TOKEN_REQUEST });
     updateTokenRequest()
       .then((res) => {
@@ -373,38 +367,22 @@ export const updateToken:AppThunk=()=> {
         });
       });
   };
-}
+};
 
-
-
-export const setResetFormValue = (field:string, value:string) => ({
+export const setResetFormValue = (field: string, value: string) => ({
   type: RESET_FORM_SET_VALUE,
   field,
   value,
 });
 
-
-
-export const setLoginFormValue = (field:string, value:string) => ({
+export const setLoginFormValue = (field: string, value: string) => ({
   type: LOGIN_FORM_SET_VALUE,
   field,
   value,
 });
 
-
-
-
-
-export const setRegisterFormValue = (field:string, value:string) => ({
+export const setRegisterFormValue = (field: string, value: string) => ({
   type: REGISTER_FORM_SET_VALUE,
   field,
   value,
 });
-
-
-
-
-
-
-
-
