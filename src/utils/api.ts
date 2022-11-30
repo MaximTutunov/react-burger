@@ -7,7 +7,7 @@ export const Api = {
   },
 };
 
-export const checkResponse = (res) => {
+export const checkResponse = (res:Response) => {
   if (res.ok) {
     return res.json();
   } else {
@@ -15,7 +15,7 @@ export const checkResponse = (res) => {
   }
 };
 
-function request(url, options) {
+function request(url:string, options:RequestInit) {
   return fetch(url, options).then(checkResponse);
 }
 
@@ -38,7 +38,7 @@ export const getUserRequest = async () => {
   });
 };
 
-export const updateUserRequest = async (email, name, password) => {
+export const updateUserRequest = async (email:string, name:string, password:string) => {
   return await fetchRefresh(`${Api.url}/auth/user`, {
     method: "PATCH",
     headers: {
@@ -53,7 +53,7 @@ export const updateUserRequest = async (email, name, password) => {
   });
 };
 
-export const getOrderDetailsData = async (productsId) => {
+export const getOrderDetailsData = async (productsId:string[]) => {
   return await request(`${Api.url}/orders`, {
     method: "POST",
     body: JSON.stringify({
@@ -66,7 +66,7 @@ export const getOrderDetailsData = async (productsId) => {
   });
 };
 
-export const forgotPassRequest = async (email) => {
+export const forgotPassRequest = async (email:string) => {
   return await request(`${Api.url}/password-reset`, {
     method: "POST",
     body: JSON.stringify(email),
@@ -81,7 +81,7 @@ export const forgotPassRequest = async (email) => {
   })
 };
 
-export const resetPassRequest = async (password, token) => {
+export const resetPassRequest = async (password:string, token:any) => {
   return await request(`${Api.url}/password-reset/reset`, {
     method: "POST",
     body: JSON.stringify(password, token),
@@ -91,7 +91,7 @@ export const resetPassRequest = async (password, token) => {
   })
 };
 
-export const loginRequest = async (email, password) => {
+export const loginRequest = async (email:string, password:string) => {
   return await request(`${Api.url}/auth/login`, {
     method: "POST",
     headers: {
@@ -104,7 +104,7 @@ export const loginRequest = async (email, password) => {
   })
 };
 
-export const registerUserRequest = async (email, password, name) => {
+export const registerUserRequest = async (email:string, password:string, name:string) => {
   return await request(`${Api.url}/auth/register`, {
     method: "POST",
     body: JSON.stringify({
@@ -142,11 +142,11 @@ export const updateTokenRequest = async () => {
   })
 };
 
-export const fetchRefresh = async (url, options) => {
+export const fetchRefresh = async (url:string, options:RequestInit) => {
   try {
     const res = await fetch(url, options);
     return await checkResponse(res);
-  } catch (err) {
+  } catch (err:any) {
     if (err.message === "jwt expired") {
       const refreshToken = await updateTokenRequest();
       const accessToken = refreshToken.accessToken.split("Bearer ")[1];
@@ -155,7 +155,7 @@ export const fetchRefresh = async (url, options) => {
       }
       localStorage.setItem("refreshToken", refreshToken.refreshToken);
       setCookie("token", accessToken);
-      options.headers.Authorization = refreshToken.accessToken;
+      (options.headers as {[key:string]:string}).Authorization = refreshToken.accessToken;
       const res = await fetch(url, options);
       return await checkResponse(res);
     } else {
