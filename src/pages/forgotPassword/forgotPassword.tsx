@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,FC, ChangeEvent, FormEvent } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link, Redirect, useLocation } from "react-router-dom";
 import {
@@ -8,19 +8,20 @@ import {
 import { forgotPassword } from "../../services/actions/authAction";
 import { getCookie } from "../../utils/cookie";
 import style from "./forgotPassword.module.css";
+import { TLocation, useTypedDispatch } from "../../services/types";
 
-export  function ForgotPassword () {
-  const dispatch = useDispatch();
-  const location = useLocation();
+const ForgotPassword:FC = ()=> {
+  const dispatch = useTypedDispatch();
+  const location = useLocation<TLocation>();
   const [email, setEmail] = useState("");
   const cookie = getCookie("token");
   const { forgotPassSuccess } = useSelector((state) => state.authorization);
 
-  function onChange(evt) {
+  function onChange(evt:ChangeEvent<HTMLInputElement>) {
     setEmail(evt.target.value);
   }
 
-  function onSubmit(evt) {
+  function onSubmit(evt:FormEvent<HTMLFormElement>) {
     evt.preventDefault();
     dispatch(forgotPassword({ email }));
   }
@@ -63,3 +64,4 @@ export  function ForgotPassword () {
     </div>
   );
 };
+export default ForgotPassword

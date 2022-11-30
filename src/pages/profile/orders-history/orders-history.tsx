@@ -2,10 +2,12 @@ import { useSelector } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
 import { OrdersCard } from "../../../components/orders-card/orders-card";
 import style from "./orders-history.module.css";
+import {TLocation, useTypedSelector } from "../../services/types";
+import {FC} from 'react'
 
-export function OrdersHistory() {
-  const location = useLocation();
-  const orders = useSelector((store) => store.wsAuthFeed.orders);
+const OrdersHistory:FC=()=> {
+  const location = useLocation<TLocation>();
+  const orders = useTypedSelector((store) => store.wsAuthFeed.orders);
   orders.reverse();
 
   return (
@@ -28,3 +30,4 @@ export function OrdersHistory() {
     </div>
   );
 }
+export default OrdersHistory

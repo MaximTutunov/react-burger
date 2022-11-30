@@ -1,7 +1,9 @@
+import {FC} from 'react';
 import { Link } from "react-router-dom";
 import errorImg from "../..//images/404.jpg";
 import style from "./notFound404.module.css";
-export function NotFound404 () {
+import { useTypedDispatch } from "../../services/types";
+const NotFound404:FC= ()=> {
   return (
     <div className={`${style.container} pb-20`}>
       <img
@@ -18,3 +20,4 @@ export function NotFound404 () {
     </div>
   );
 };
+export default NotFound404

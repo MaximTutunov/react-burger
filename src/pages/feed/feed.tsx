@@ -7,10 +7,10 @@ import {
     wsConnectionOpen,
   } from "../../services/actions/wsAction";
 import style from "./feed.module.css";
+import { useTypedDispatch } from "../../services/types";
 
-export const Feed = () => {
-  const dispatch = useDispatch();
-
+export const Feed:FC = () => {
+  const dispatch = useTypedDispatch();
   useEffect(() => {
     dispatch(wsConnectionOpen());
     return () => {
@@ -30,3 +30,4 @@ export const Feed = () => {
     </div>
   );
 };
+export default Feed

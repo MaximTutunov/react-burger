@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, ChangeEvent, FormEvent } from "react";
 import {
   Button,
   Input,
@@ -24,13 +24,13 @@ import {
 import { Orders } from "./orders-history/orders-history";
 import { OrderInfo } from "../../components/order-info/order-info";
 import style from "./profile.module.css";
-
-export function Profile() {
-  const dispatch = useDispatch();
-  const location = useLocation();
+import { useTypedDispatch, useTypedSelector, TLocation } from "../../services/types";
+const Profile:FC=()=> {
+  const dispatch = useTypedDispatch();
+  const location = useLocation<TLocation>();
   const background = location.state?.background;
   const matchOrderDetails = !!useRouteMatch({ path: "/profile/orders/:id" });
-  const { email, name } = useSelector((state) => state.authorization.user);
+  const { email, name } = useTypedSelector((state) => state.authorization.user);
   const [form, setForm] = useState({
     email: "",
     name: "",
@@ -41,11 +41,11 @@ export function Profile() {
     dispatch(singOut());
   }
 
-  function onChange(evt) {
+  function onChange(evt:ChangeEvent<HTMLInputElement>) {
     setForm({ ...form, [evt.target.name]: evt.target.value });
   }
 
-  function submit(evt) {
+  function submit(evt:FormEvent<HTMLFormElement>) {
     evt.preventDefault();
     dispatch(updateUser(form.email, form.name, form.password));
   }
@@ -65,7 +65,7 @@ export function Profile() {
     });
   }, [email, name]);
 
-  function reset(evt) {
+  function reset(evt:ChangeEvent<HTMLInputElement>) {
     evt.preventDefault();
     setForm({
       email: email,
@@ -184,3 +184,4 @@ export function Profile() {
     </div>
   );
 }
+export default Profile

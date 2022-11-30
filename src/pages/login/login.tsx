@@ -8,22 +8,24 @@ import {
 import { setLoginFormValue, singIn } from "../../services/actions/authAction";
 import { getCookie } from "../../utils/cookie";
 import style from "./login.module.css";
+import React, { useState,FC, ChangeEvent, FormEvent } from "react";
 
-export function Login () {
-  const location = useLocation();
-  const dispatch = useDispatch();
-  const { email, password } = useSelector((state) => state.authorization.form);
+import { TLocation, useTypedDispatch,useTypedSelector } from "../../services/types";
+const Login:FC= ()=> {
+  const location = useLocation<TLocation>();
+  const dispatch = useTypedDispatch();
+  const { email, password } = useTypedSelector((state) => state.authorization.form);
   const cookie = getCookie("token");
 
-  const requestLogin = useSelector((state) => state.authorization.loginRequest);
-  const errorLogin = useSelector((state) => state.authorization.loginFailed);
+  const requestLogin = useTypedSelector((state) => state.authorization.loginRequest);
+  const errorLogin = useTypedSelector((state) => state.authorization.loginFailed);
   
-  function onSubmit(evt) {
+  function onSubmit(evt:FormEvent<HTMLFormElement>) {
     evt.preventDefault();
     dispatch(singIn(email, password));
   }
 
-  function onChange(evt) {
+  function onChange(evt:ChangeEvent<HTMLInputElement>) {
     dispatch(setLoginFormValue(evt.target.name, evt.target.value));
   }
 
@@ -86,3 +88,4 @@ export function Login () {
     </div>
   );
 };
+export default Login

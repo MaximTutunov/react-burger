@@ -11,20 +11,23 @@ import {
   } from "../../services/actions/authAction";
   import { getCookie } from "../../utils/cookie";
   import style from "./resetPassword.module.css";
+  import { useTypedDispatch, useTypedSelector, TLocation } from "../../services/types";
+import React, { FC, useState, useEffect, ChangeEvent, FormEvent } from "react";
+
   
-  export function ResetPassword () {
-    const dispatch = useDispatch();
-    const location = useLocation();
+  const ResetPassword:FC= ()=> {
+    const dispatch = useTypedDispatch();
+    const location = useLocation<TLocation>();
     const cookie = getCookie("token");
   
-    const { password, code } = useSelector((state) => state.authorization.form);
-    const { resetPassSuccess, forgotPassSuccess } = useSelector(
+    const { password, code } = useTypedSelector((state) => state.authorization.form);
+    const { resetPassSuccess, forgotPassSuccess } = useTypedSelector(
       (state) => state.authorization
     );
-      function onChange(evt) {
+      function onChange(evt:ChangeEvent<HTMLInputElement>) {
       dispatch(setResetFormValue(evt.target.name, evt.target.value));
     }
-      function formSubmit(evt) {
+      function formSubmit(evt:FormEvent<HTMLFormElement>) {
       evt.preventDefault();
       dispatch(resetPassword({ password, token: code }));
     }
@@ -82,4 +85,4 @@ import {
       </div>
     );
   };
-  
+  export default ResetPassword

@@ -12,21 +12,24 @@ import {
 } from "../../services/actions/authAction";
 import { getCookie } from "../../utils/cookie";
 import style from "./registration.module.css";
+import { useTypedDispatch, useTypedSelector, TLocation } from "../../services/types";
+import React, { FC, useState, useEffect, ChangeEvent, FormEvent } from "react";
 
-export function Register () {
-  const dispatch = useDispatch();
-  const location = useLocation();
-  const { email, password, name } = useSelector(
+
+const Register:FC= ()=> {
+  const dispatch = useTypedDispatch();
+  const location = useLocation<TLocation>();
+  const { email, password, name } = useTypedSelector(
     (state) => state.authorization.form
   );
   const cookie = getCookie("token");
 
-  function formSubmit(evt) {
+  function formSubmit(evt:FormEvent<HTMLFormElement>) {
     evt.preventDefault();
     dispatch(registerUser(email, password, name));
   }
 
-  function onChange(evt) {
+  function onChange(evt:ChangeEvent<HTMLInputElement>) {
     dispatch(setRegisterFormValue(evt.target.name, evt.target.value));
   }
 
@@ -86,3 +89,4 @@ export function Register () {
     </div>
   );
 };
+export default Register
