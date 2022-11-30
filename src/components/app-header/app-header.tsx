@@ -1,4 +1,5 @@
-import React from "react";
+import {FC} from "react";
+import { TLocation } from "../../services/types";
 import {useLocation, Link, NavLink,} from 'react-router-dom';
 import {
   Logo,
@@ -8,8 +9,8 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import style from "./app-header.module.css";
 
-export default function AppHeader() {
-  const location = useLocation();
+const AppHeader:FC =()=> {
+  const location = useLocation<TLocation>();
 
   return (
     <header className={style.header}>
@@ -52,7 +53,7 @@ export default function AppHeader() {
 
           <div className={`${style.menu_item} ml-25`}>
             <Link to="/">
-              <Logo type="primary" />
+              <Logo/>
             </Link>
           </div>
           
@@ -85,5 +86,6 @@ export default function AppHeader() {
     </header>
   );
 }
+export default AppHeader
 
 

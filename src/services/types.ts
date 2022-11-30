@@ -23,7 +23,7 @@ export type AppThunk<ReturnType = void> =ActionCreator<ThunkAction<ReturnType, A
 
 export type AppDispatch = typeof store.dispatch;
 
-export const useDispatch = () => dispatchHook<AppDispatch & AppThunk>;
+export const useTypedDispatch = () => dispatchHook<AppDispatch & AppThunk>;
 
 export const useTypedSelector: TypedUseSelectorHook<RootState> =selectorHook; 
 
@@ -42,6 +42,13 @@ export type TUserResponse ={
     message: string;
 }
 
+export type TOrdersCard={
+	order:TFeed;
+	status:string;
+}
+export type TOrderInfoDetails={
+	details:TIngredients[];
+}
 export type TIngredients ={
     type: "bun" | "main" | "sauce";
     __v: number;
@@ -159,6 +166,28 @@ export type TFeedResponse ={
     totalToday: number;
     orders: Array<TFeed>;
     }
+export type TBurgerConstructorItems ={
+    index:number;
+    items:TIngredients
+}
+
+export type TIngredientsItems ={
+ingredient:TIngredients
+}
+export type TIngredientsCat ={
+ingredients:TIngredients[];
+type:string;
+tabRef:(node?:Element|undefined|null)=>void;
+}
+export type TIngredientsDetailsItem={
+    text:string;
+    value:number;
+}
+export type TOrderImage={
+    image?:string;
+    alt:string;
+  }
+
 
 
 

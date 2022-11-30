@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, FC } from 'react';
 import { useSelector } from 'react-redux';
 import { useInView } from 'react-intersection-observer';
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import Ingredients from "../ingredients/ingredients";
 import style from "./burger-ingredients.module.css";
 
-export default function BurgerIngredients () {
+const BurgerIngredients:FC = () => {
   const [current, setCurrent] = useState("bun");
   const ingredients = useSelector(store => store.burgerIngredients.ingredients)
   const [bunRef, bunView] = useInView({
@@ -17,7 +17,7 @@ export default function BurgerIngredients () {
 	const [sauceRef, sauceView] = useInView({
 		threshold: 0.1
 	});
-  const scrollTabClick = (e) => {
+  const scrollTabClick = (e:string) => {
 		setCurrent(e);
 		const section = document.getElementById(e);
 		section.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -96,4 +96,4 @@ export default function BurgerIngredients () {
     </section>
   );
 }
-
+export default BurgerIngredients

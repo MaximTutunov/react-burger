@@ -1,9 +1,11 @@
 import { useSelector } from "react-redux";
 import style from "./orders-status.module.css";
+import {FC} from 'react';
+import {useTypedSelector} from '../../services/types';
 
-export const OrdersStatus = () => {
+const OrdersStatus:FC = () => {
      
-    const { total, totalToday, orders } = useSelector((store) => store.wsFeed);
+    const { total, totalToday, orders } = useTypedSelector((store) => store.wsFeed);
  
   const doneStatusOrder = orders
     .filter((order) => order.status === "done")
@@ -62,3 +64,4 @@ export const OrdersStatus = () => {
     </div>
   );
 };
+export default OrdersStatus

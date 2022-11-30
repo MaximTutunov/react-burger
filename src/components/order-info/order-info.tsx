@@ -14,16 +14,18 @@ import {
   wsAuthConnectionOpen,
 } from "../../services/actions/wsAuthAction";
 import style from "./order-info.module.css";
+import {FC} from 'react';
+import {useTypedSelector, useTypedDispatch} from '../../services/types';
 
-export const OrderInfo = () => {
-  const dispatch = useDispatch();
+ const OrderInfo:FC = () => {
+  const dispatch = useTypedDispatch();
   let match = useRouteMatch();
   const isProfile = "/profile/orders/:id";
   const isFeed = "/feed/:id";
-  let { id } = useParams();
-  const allOrders = useSelector((store) => store.wsFeed.orders);
-  const authorizationOrders = useSelector((store) => store.wsAuthFeed.orders);
-  const ingredients = useSelector(
+  let { id } = useParams<{id:string}>();
+  const allOrders = useTypedSelector((store) => store.wsFeed.orders);
+  const authorizationOrders = useTypedSelector((store) => store.wsAuthFeed.orders);
+  const ingredients = useTypedSelector(
     (store) => store.burgerIngredients.ingredients
   );
   let orders = match.path === isProfile ? authorizationOrders : allOrders;
@@ -106,3 +108,4 @@ export const OrderInfo = () => {
     </>
   );
 };
+export default OrderInfo

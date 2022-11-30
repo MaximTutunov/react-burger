@@ -15,8 +15,13 @@ import {
   ADD_INGREDIENT_CONSTRUCTOR,
 } from "../../services/actions/constructorAction";
 import style from "./burger-constructor.module.css";
+import { TIngredients } from "../../services/types";
 
-export default function BurgerConstructor() {
+interface DropItem {
+ingredient: TIngredients
+}
+
+const BurgerConstructor:FC =()=> {
   const history = useHistory();
   const dispatch = useDispatch();
   const [total, setTotal] = useState(0);
@@ -160,3 +165,5 @@ export default function BurgerConstructor() {
   );
  
 }
+
+export default BurgerConstructor

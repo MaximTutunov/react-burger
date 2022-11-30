@@ -1,5 +1,5 @@
-import { useMemo } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useMemo, FC } from "react";
+import {  useSelector } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
 import { useDrag } from "react-dnd";
 import {
@@ -8,10 +8,11 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import ingredientType from "../../utils/types";
 import style from "./ingredient-item.module.css";
+import {TIngredientsItems, TLocation} from '../../services/types'
 
-export default function IngredientItem({ ingredient }) {
-  const dispatch = useDispatch();
-  const location = useLocation();
+const IngredientItem:FC<TIngredientsItems> =({ ingredient }) =>{
+  
+  const location = useLocation<TLocation>();
   const { bun, items } = useSelector((state) => state.burgerConstructor);
   const { image, name, price } = ingredient;
   const [{ opacity }, dragRef] = useDrag({

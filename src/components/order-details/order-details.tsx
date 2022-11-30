@@ -1,9 +1,11 @@
 import { useSelector } from "react-redux";
+import {FC} from 'react';
 import acceptedImg from "../../images/AcceptedIcon.svg";
 import style from "./order-details.module.css";
+import {useTypedSelector} from '../../services/types';
 
-export default function OrderDetails () {
-  const orderNumber = useSelector((store) => store.order.number);
+ const OrderDetails:FC = () => {
+  const orderNumber = useTypedSelector(store => store.order.number);
   return (
    <div className={`${style.container} pl-25 pr-25`}>
       <h2
@@ -34,3 +36,4 @@ export default function OrderDetails () {
     </div>
   );
 }
+export default OrderDetails

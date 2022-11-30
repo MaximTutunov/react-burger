@@ -2,10 +2,12 @@ import { useSelector } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
 import { OrdersCard } from "../orders-card/orders-card";
 import style from "./orders.module.css";
+import {FC} from 'react';
+import {TLocation, useTypedSelector} from '../../services/types';
 
-export const Orders = () => {
-  const location = useLocation();
-  const orders = useSelector((store) => store.wsFeed.orders);
+const Orders:FC = () => {
+  const location = useLocation<TLocation>();
+  const orders = useTypedSelector((store) => store.wsFeed.orders);
   return (
     <div className={style.container}>
       {orders &&
@@ -26,3 +28,4 @@ export const Orders = () => {
     </div>
   );
 };
+export default Orders

@@ -2,9 +2,10 @@ import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import IngredientsDetailsItem from "../ingredients-details-item/ingredients-details-item";
 import style from "./ingredient-details.module.css";
+import {FC} from 'react';
 
-export default function IngredientDetails () {
-  const { id } = useParams();
+const  IngredientDetails: FC = ()=> {
+  const { id } = useParams<{id:string}>();
   const ingredients = useSelector(
     (state) => state.burgerIngredients.ingredients
   );
@@ -43,4 +44,4 @@ export default function IngredientDetails () {
   );
 }
 
-
+export default IngredientDetails

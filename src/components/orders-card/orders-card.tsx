@@ -5,10 +5,12 @@ import { OrderImage } from "../order-image/order-image";
 import { formatDate } from "../../utils/cookie";
 import propTypes from "prop-types";
 import style from "./orders-card.module.css";
+import {FC} from 'react';
+import {TOrdersCard, useTypedSelector} from '../../services/types';
 
-export const OrdersCard = ({ order, status }) => {
+const OrdersCard:FC<TOrdersCard> = ({ order, status }) => {
   const { createdAt, number, name } = order;
-  const ingredients = useSelector(
+  const ingredients = useTypedSelector(
     (store) => store.burgerIngredients.ingredients
   );
   const orderIngredientsData = useMemo(() => {
@@ -108,8 +110,4 @@ export const OrdersCard = ({ order, status }) => {
     </div>
   );
 };
-
-OrdersCard.propTypes = {
-  order: propTypes.object.isRequired,
-  status: propTypes.bool,
-};
+export default OrdersCard

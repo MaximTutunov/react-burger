@@ -1,14 +1,15 @@
-import React from "react";
+import React, {FC} from "react";
 import ReactDOM from "react-dom";
 import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import ModalOverlay from "../modal-overlay/modal-overlay";
 import PropTypes from "prop-types";
 import style from "./modal.module.css";
-const modalWindow = document.querySelector("#modal");
+import { TModal } from "../../services/types";
+const modalWindow = document.querySelector("#modal") as HTMLElement;
 
-export default function Modal({ description, closeModal, children }) {
+const Modal:FC<TModal>=({ description, closeModal, children })=> {
   React.useEffect(() => {
-    function handleEscKeydown(evt) {
+    function handleEscKeydown(evt:KeyboardEvent) {
       if (evt.key === "Escape") {
         closeModal();
       }
@@ -37,9 +38,4 @@ export default function Modal({ description, closeModal, children }) {
     modalWindow
   );
 }
-
-Modal.propTypes = {
-  closeModal: PropTypes.func.isRequired,
-  children: PropTypes.node.isRequired,
-  description: PropTypes.string,
-};
+export default Modal;

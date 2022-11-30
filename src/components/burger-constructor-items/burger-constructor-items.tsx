@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, FC } from "react";
 import { useDispatch } from "react-redux";
 import { useDrag, useDrop } from "react-dnd";
 import {
@@ -10,15 +10,16 @@ import {
   MOVE_INGREDIENT,
 } from "../../services/actions/constructorAction";
 import ingredientType from "../../utils/types";
+import { TBurgerConstructorItems } from "../../services/types";
 import style from "./burger-constructor-items.module.css";
 
 
-export default function BurgerConstructorItems  ({ index, items })  {
+const BurgerConstructorItems:FC<TBurgerConstructorItems> = ({ index, items }) => {
   const dispatch = useDispatch();
   const { image, id, price, name } = items;
   const ref = useRef(null);
 
-  const onDelete = (id) => {
+  const onDelete = (id?:string) => {
     dispatch({
       type: DELETE_INGREDIENT,
       id: id,
@@ -74,5 +75,5 @@ BurgerConstructorItems.protoType = {
   items: ingredientType.isRequired,
   index: ingredientType.isRequired,
 };
-
+export default BurgerConstructorItems
 

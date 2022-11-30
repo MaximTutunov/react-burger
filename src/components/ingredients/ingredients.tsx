@@ -1,8 +1,10 @@
 import IngredientItem from "../ingredient-item/ingredient-item";
 import PropTypes from "prop-types";
 import styles from "./ingredients.module.css";
+import {FC} from 'react';
+import {TIngredientsCat} from '../../services/types'
 
-export default function Ingredients({ tabRef, ingredients, type }) {
+const Ingredients:FC<TIngredientsCat>=({ tabRef, ingredients, type })=>{
   const categories = {
     bun: "Булки",
     sauce: "Соусы",
@@ -30,7 +32,5 @@ export default function Ingredients({ tabRef, ingredients, type }) {
   );
 }
 
-Ingredients.propTypes = {
-  ingredients: PropTypes.array.isRequired,
-  type: PropTypes.string.isRequired,
-};
+
+export default Ingredients

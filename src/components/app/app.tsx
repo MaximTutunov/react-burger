@@ -1,4 +1,5 @@
-import React, { useEffect, useCallback } from "react";
+import React, { useEffect, useCallback, FC } from "react";
+import { TLocation } from "../../services/types";
 import { useDispatch, useSelector } from "react-redux";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { DndProvider } from "react-dnd";
@@ -35,9 +36,9 @@ import { RESET_INGREDIENT } from "../../services/actions/constructorAction";
 import { OrderInfo } from "../order-info/order-info";
 import { closeOrderInfoModal } from "../../services/actions/orderInfoModCloseAction";
 
-export default function App() {
+const App: FC =()=>{
   const dispatch = useDispatch();
-  const location = useLocation();
+  const location = useLocation<TLocation>();
   const history = useHistory();
   const background = location.state?.background;
   const token = localStorage.getItem("refreshToken");
@@ -45,8 +46,10 @@ export default function App() {
   const isLoading = useSelector((state) => state.burgerIngredients.isLoading);
   const hasError = useSelector((state) => state.burgerIngredients.hasError);
   const cookie = getCookie("token");
-  const idOrderInfo = useRouteMatch(["/profile/orders/:id", "/feed/:id"])
+
+  const idOrderInfo = useRouteMatch<{[id:string]:string}|null>(["/profile/orders/:id", "/feed/:id"])
     ?.params?.id;
+
   const handleCloseModalIngredient = useCallback(() => {
     dispatch(closeIngredientModal());
     history.replace("/");
@@ -161,3 +164,4 @@ export default function App() {
 );
   
 }
+export default App;

@@ -4,15 +4,16 @@ import uniqid from "uniqid";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import propTypes from "prop-types";
 import { OrderImage } from "../order-image/order-image";
-
+import {FC} from 'react';
 import style from "./order-info-details.module.css";
+import {TOrderInfoDetails, useTypedSelector} from '../../services/types';
 
-export const OrderInfoDetails = ({ details }) => {
-  const ingredients = useSelector(
+export const OrderInfoDetails:FC<TOrderInfoDetails> = ({ details }) => {
+  const ingredients = useTypedSelector(
     (store) => store.burgerIngredients.ingredients
   );
 
-  const count = (elem) => {
+  const count = (elem:object) => {
     let count = details.filter((item) => {
       return item === elem;
     }).length;
@@ -71,3 +72,4 @@ export const OrderInfoDetails = ({ details }) => {
 OrderInfoDetails.propTypes = {
   details: propTypes.array.isRequired,
 };
+export default OrderInfoDetails
