@@ -66,7 +66,7 @@ import React, { FC, useState, useEffect, ChangeEvent, FormEvent } from "react";
             />
           </div>
           <div className={style.button}>
-            <Button disabled={!password || !code} type="primary" size="medium">
+            <Button disabled={!password || !code} type="primary" size="medium" htmlType="button">
               {!!resetPassSuccess ? (
                 <Redirect to={location.state?.from || "/profile"} />
               ) : (

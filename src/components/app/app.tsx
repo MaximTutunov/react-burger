@@ -23,7 +23,7 @@ import { getUser, updateToken } from "../../services/actions/authAction";
 import { ProtectedRoute } from "../protectedroute/ProtectedRoute";
 import { getCookie } from "../../utils/cookie";
 import BurgerConstructor from "../burger-constructor/burger-constructor";
-import BurgerIngredients from "../burger-ingredients/burger-ingredients";
+import {BurgerIngredients} from "../burger-ingredients/burger-ingredients";
 import Modal from "../modal/modal";
 import { getBurgerIngredients } from "../../services/actions/ingredientsAction";
 import OrderDetails from "../order-details/order-details";

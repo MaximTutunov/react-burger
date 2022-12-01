@@ -29,7 +29,7 @@ const Modal:FC<TModal>=({ description, closeModal, children })=> {
           {description}
         </h3>
         <button className={style.close_button}>
-          <CloseIcon onClick={closeModal} />
+          <CloseIcon type = 'primary' onClick={closeModal} />
         </button>
         {children}
       </div>

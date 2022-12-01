@@ -36,8 +36,8 @@ export const useTypedDispatch = () => dispatchHook<AppDispatch & AppThunk>();
 export const useTypedSelector: TypedUseSelectorHook<RootState> = selectorHook;
 
 export type TUser = {
-  email?: string;
-  name?: string;
+  email: string;
+  name: string;
   createdAt?: string;
   updatedAt?: string;
 };

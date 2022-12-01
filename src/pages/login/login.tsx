@@ -59,7 +59,7 @@ const Login:FC= ()=> {
           />
         </div>
         
-              <Button disabled={!password || !email} type="primary" size="medium">
+              <Button disabled={!password || !email} type="primary" size="medium" htmlType="button">
         Войти
         </Button>
 

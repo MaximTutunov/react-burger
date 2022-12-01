@@ -50,7 +50,7 @@ const ForgotPassword:FC = ()=> {
             size={"default"}
           />
         </div>
-        <Button disabled={!email} type="primary" size="medium">
+        <Button disabled={!email} type="primary" size="medium" htmlType="button">
           {forgotPassSuccess ? <Redirect to="/reset-password" /> : ""}
           Восстановить
         </Button>

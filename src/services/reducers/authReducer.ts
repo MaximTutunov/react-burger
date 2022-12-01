@@ -37,7 +37,7 @@ import {
   UPDATE_TOKEN_FAILED, 
 } from "../actions/authAction";
 
-type TInitialState = {
+type TAuthInitialState = {
   message: string,
 
   form: {
@@ -67,7 +67,7 @@ type TInitialState = {
   updateTokenFailed: boolean,
 };
 
-const initialState:TInitialState = {
+const initialState:TAuthInitialState = {
   message: "",
   form: {
     email: "",
@@ -100,7 +100,7 @@ const initialState:TInitialState = {
   updateTokenFailed: false,
 };
 
-export const authReducer = (state = initialState, action:TAuthActions):TInitialState => {
+export const authReducer = (state = initialState, action:TAuthActions):TAuthInitialState => {
   switch (action.type) {
     case GET_USER_REQUEST: {
       return {

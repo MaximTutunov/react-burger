@@ -1,4 +1,4 @@
-import React, { useState, useEffect, ChangeEvent, FormEvent, FC } from "react";
+import  { useState, useEffect, ChangeEvent, FormEvent, FC } from "react";
 import {
   Button,
   Input,
@@ -7,7 +7,6 @@ import {
   wsAuthConnectionClosed,
   wsAuthConnectionOpen,
 } from "../../services/actions/wsAuthAction";
-import { useDispatch, useSelector } from "react-redux";
 import OrdersHistory from "./orders-history/orders-history";
 import {
   NavLink,
@@ -28,12 +27,15 @@ import {
   useTypedSelector,
   TLocation,
 } from "../../services/types";
-const Profile: FC = () => {
+
+export const Profile: FC = () => {
   const dispatch = useTypedDispatch();
   const location = useLocation<TLocation>();
   const background = location.state?.background;
   const matchOrderDetails = !!useRouteMatch({ path: "/profile/orders/:id" });
+
   const { email, name } = useTypedSelector((state) => state.authorization.user);
+
   const [form, setForm] = useState({
     email: "",
     name: "",
@@ -175,6 +177,7 @@ const Profile: FC = () => {
                 type="primary"
                 size="medium"
                 onClick={() => reset}
+                htmlType="button"
               >
                 Oтмена
               </Button>
@@ -182,6 +185,7 @@ const Profile: FC = () => {
                 disabled={!form.email && !form.password && !form.name}
                 type="primary"
                 size="medium"
+                htmlType="button"
               >
                 Сохранить
               </Button>
@@ -192,4 +196,4 @@ const Profile: FC = () => {
     </div>
   );
 };
-export default Profile;
+

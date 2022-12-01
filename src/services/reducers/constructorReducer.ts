@@ -8,13 +8,13 @@ import {
 } from "../actions/constructorAction";
 import { TIngredients } from "../types";
 
-type TInitialState = {
+type TConstructorInitialState = {
   itemsId: string[];
   items: TIngredients[];
   bun: TIngredients;
 };
 
-const initialState:TInitialState = {
+const initialState:TConstructorInitialState = {
   itemsId: [],
   items: [],
   bun: {
@@ -39,7 +39,7 @@ const initialState:TInitialState = {
 export const constructorReducer = (
   state = initialState,
   action: TConstructorActions
-): TInitialState => {
+): TConstructorInitialState => {
   switch (action.type) {
     case DELETE_INGREDIENT: {
       return {

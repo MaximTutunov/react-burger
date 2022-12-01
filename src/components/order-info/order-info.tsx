@@ -1,10 +1,8 @@
 import { useEffect, useMemo } from "react";
-import { useSelector, useDispatch } from "react-redux";
 import { useParams, useRouteMatch } from "react-router-dom";
 import { OrderInfoDetails } from "../order-info-details/order-info-details";
 import { formatDate } from "../../utils/cookie";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
-
 import {
   wsConnectionClosed,
   wsConnectionOpen,
@@ -15,7 +13,7 @@ import {
 } from "../../services/actions/wsAuthAction";
 import style from "./order-info.module.css";
 import {FC} from 'react';
-import {useTypedSelector, useTypedDispatch} from '../../services/types';
+import {useTypedSelector, useTypedDispatch, TIngredients} from '../../services/types';
 
  export const OrderInfo:FC = () => {
   const dispatch = useTypedDispatch();
@@ -90,7 +88,7 @@ import {useTypedSelector, useTypedDispatch} from '../../services/types';
             Состав:
           </h3>
           <ul className={`${style.list}`}>
-            <OrderInfoDetails details={orderIngredientsData} key={id} />
+            <OrderInfoDetails details={orderIngredientsData as TIngredients[]} key={id} />
           </ul>
           <div className={`${style.total} pb-10`}>
             <p className="text text_type_main-default text_color_inactive">

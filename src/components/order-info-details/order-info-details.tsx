@@ -35,7 +35,7 @@ export const OrderInfoDetails:FC<TOrderInfoDetails> = ({ details }) => {
           return (
             <li
               className={`${style.item} pb-3`}
-              key={item._id}
+              key={item?._id}
             >
               {item && (
                 <>

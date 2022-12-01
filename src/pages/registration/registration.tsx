@@ -76,6 +76,7 @@ const Register:FC= ()=> {
           disabled={!(name && email && password)}
           type="primary"
           size="medium"
+          htmlType="button"
         >
           Зарегистрироваться
         </Button>

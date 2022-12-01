@@ -2,7 +2,7 @@ import { CLOSE_INGREDIENT_MODAL, TCloseIngredientModalAction } from "../actions/
 import { TIngredients } from "../types";
 
 type TingredientInitialState = {
-  openModal: string|null|TIngredients,
+  openModal: string|TIngredients|null,
 };
 
 const ingredientInitialState = {
