@@ -1,5 +1,4 @@
 import { useParams } from "react-router-dom";
-import { useSelector } from "react-redux";
 import IngredientsDetailsItem from "../ingredients-details-item/ingredients-details-item";
 import style from "./ingredient-details.module.css";
 import {FC} from 'react';
