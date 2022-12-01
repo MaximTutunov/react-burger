@@ -16,7 +16,7 @@ export const checkResponse = (res:Response) => {
 };
 
 function request(url:string, options:RequestInit) {
-  return fetch(url, options).then(checkResponse);
+  return fetch(url, options).then(res=>checkResponse(res));
 }
 
 export const getIngredientsData = async () => {

@@ -1,5 +1,4 @@
-import { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useEffect, FC } from "react";
 import  OrdersStatus  from "../../components/orders-status/orders-status";
 import  Orders  from "../../components/orders/orders";
 import {

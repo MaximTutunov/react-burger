@@ -28,11 +28,11 @@ type TAppActions =
   | TWsAuthActions;
 
 export type RootState = ReturnType<typeof rootReducer>;
-export type AppThunk<ReturnType = void> = ActionCreator<
+export type AppThunk<ReturnType = Promise<any>|void> = ActionCreator<
   ThunkAction<ReturnType, Action, RootState, TAppActions>
 >;
 export type AppDispatch = typeof store.dispatch;
-export const useTypedDispatch = () => dispatchHook<AppDispatch & AppThunk>;
+export const useTypedDispatch = () => dispatchHook<AppDispatch & AppThunk>();
 export const useTypedSelector: TypedUseSelectorHook<RootState> = selectorHook;
 
 export type TUser = {
@@ -97,13 +97,13 @@ export type TFeed = {
 };
 
 export type TModal = {
-  title: string;
+  description: string;
   children: ReactNode;
-  onClickClose: () => void;
+  closeModal: () => void;
 };
 
 export type TModalOverlay = {
-  onClickClose: () => void;
+  closeModal: () => void;
 };
 export type TLocation = {
   background: {
@@ -186,3 +186,12 @@ export type TOrderImage = {
   image?: string;
   alt: string;
 };
+export type TCat = {
+  [key:string]:string
+}
+
+export type TDropItems ={
+  index: number;
+	type: string;
+	id?: string;
+}

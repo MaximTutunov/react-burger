@@ -1,6 +1,5 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState, FC } from "react";
 import { useHistory } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
 import { useDrop } from "react-dnd";
 import { getCookie } from "../../utils/cookie";
 import BurgerConstructorItems from "../burger-constructor-items/burger-constructor-items";
@@ -16,20 +15,21 @@ import {
 } from "../../services/actions/constructorAction";
 import style from "./burger-constructor.module.css";
 import { TIngredients } from "../../services/types";
+import {useTypedSelector, useTypedDispatch} from '../../services/types';
 
 interface DropItem {
 ingredient: TIngredients
 }
 
-const BurgerConstructor:FC =()=> {
+const BurgerConstructor: FC =()=> {
   const history = useHistory();
-  const dispatch = useDispatch();
+  const dispatch = useTypedDispatch();
   const [total, setTotal] = useState(0);
 
-  const { bun, items, itemsId } = useSelector(
+  const { bun, items, itemsId } = useTypedSelector(
     (state) => state.burgerConstructor
   );
-  const { orderDetailsRequest } = useSelector((state) => state.order);
+  const { orderDetailsRequest } = useTypedSelector((state) => state.order);
 
   const cookie = getCookie("token");
 
@@ -38,7 +38,7 @@ const BurgerConstructor:FC =()=> {
     [items]
   );
 
-  const orderDetailsModal = (itemsId) => {
+  const orderDetailsModal = (itemsId:string[]) => {
     cookie && dispatch(getOrderDetails(itemsId));
     !cookie && history.push("/login");
     
@@ -54,7 +54,7 @@ const BurgerConstructor:FC =()=> {
 
   const [, dropTarget] = useDrop({
     accept: "ingredients",
-    drop(item) {
+    drop(item:DropItem) {
       if (item.ingredient.type === "bun") {
         dispatch({
           type: ADD_BUN,
@@ -111,7 +111,7 @@ const BurgerConstructor:FC =()=> {
             })}
           </ul>
         )}
-        {bun.length === 0 ? (
+        {bun.name.length === 0 ? (
           <p
             className={`${style.buninitial} text text_type_main-large pr-2 text_color_inactive`}
           >
@@ -141,6 +141,7 @@ const BurgerConstructor:FC =()=> {
               orderDetailsModal(itemsId);
             }}
             disabled
+            htmlType="button"
           >
             {orderDetailsRequest ? (
                 <div className={style.loader} />
@@ -154,8 +155,9 @@ const BurgerConstructor:FC =()=> {
             type="primary"
             size="large"
             onClick={() => {
-              orderDetailsModal(itemsId);
-            }}
+              orderDetailsModal(itemsId)
+                         }}
+                         htmlType="button"
           >
             Оформить заказ
           </Button>

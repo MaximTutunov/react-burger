@@ -1,4 +1,3 @@
-import { useSelector } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
 import  OrdersCard  from "../../../components/orders-card/orders-card";
 import style from "./orders-history.module.css";
@@ -23,7 +22,7 @@ const OrdersHistory:FC=()=> {
               className={`${style.link}`}
               key={order._id}
             >
-              <OrdersCard order={order} status={true} />
+              <OrdersCard order={order} status={order.status} />
             </Link>
           );
         })}

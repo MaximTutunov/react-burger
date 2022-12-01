@@ -8,14 +8,14 @@ import {
 import { forgotPassword } from "../../services/actions/authAction";
 import { getCookie } from "../../utils/cookie";
 import style from "./forgotPassword.module.css";
-import { TLocation, useTypedDispatch } from "../../services/types";
+import { TLocation, useTypedDispatch, useTypedSelector } from "../../services/types";
 
 const ForgotPassword:FC = ()=> {
   const dispatch = useTypedDispatch();
   const location = useLocation<TLocation>();
   const [email, setEmail] = useState("");
   const cookie = getCookie("token");
-  const { forgotPassSuccess } = useSelector((state) => state.authorization);
+  const { forgotPassSuccess } = useTypedSelector((state) => state.authorization);
 
   function onChange(evt:ChangeEvent<HTMLInputElement>) {
     setEmail(evt.target.value);

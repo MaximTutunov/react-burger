@@ -3,10 +3,11 @@ import { useSelector } from "react-redux";
 import IngredientsDetailsItem from "../ingredients-details-item/ingredients-details-item";
 import style from "./ingredient-details.module.css";
 import {FC} from 'react';
+import {useTypedSelector} from '../../services/types';
 
 const  IngredientDetails: FC = ()=> {
   const { id } = useParams<{id:string}>();
-  const ingredients = useSelector(
+  const ingredients = useTypedSelector(
     (state) => state.burgerIngredients.ingredients
   );
   const data = ingredients.find((ingredient) => ingredient._id === id);

@@ -1,6 +1,5 @@
-import React, { useEffect, useCallback, FC } from "react";
+import { useEffect, useCallback, FC } from "react";
 import { TLocation } from "../../services/types";
-import { useDispatch, useSelector } from "react-redux";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { DndProvider } from "react-dnd";
 import {
@@ -35,16 +34,17 @@ import { closeIngredientModal } from "../../services/actions/detailsAction";
 import { RESET_INGREDIENT } from "../../services/actions/constructorAction";
 import { OrderInfo } from "../order-info/order-info";
 import { closeOrderInfoModal } from "../../services/actions/orderInfoModCloseAction";
+import {useTypedSelector, useTypedDispatch} from '../../services/types';
 
 const App: FC =()=>{
-  const dispatch = useDispatch();
+  const dispatch = useTypedDispatch();
   const location = useLocation<TLocation>();
   const history = useHistory();
   const background = location.state?.background;
   const token = localStorage.getItem("refreshToken");
-  const orderNumberModal = useSelector((state) => state.order.number);
-  const isLoading = useSelector((state) => state.burgerIngredients.isLoading);
-  const hasError = useSelector((state) => state.burgerIngredients.hasError);
+  const orderNumberModal = useTypedSelector((state) => state.order.number);
+  const isLoading = useTypedSelector((state) => state.burgerIngredients.isLoading);
+  const hasError = useTypedSelector((state) => state.burgerIngredients.hasError);
   const cookie = getCookie("token");
 
   const idOrderInfo = useRouteMatch<{[id:string]:string}|null>(["/profile/orders/:id", "/feed/:id"])

@@ -1,5 +1,4 @@
 import React, { useRef, FC } from "react";
-import { useDispatch } from "react-redux";
 import { useDrag, useDrop } from "react-dnd";
 import {
   ConstructorElement,
@@ -9,13 +8,13 @@ import {
   DELETE_INGREDIENT,
   MOVE_INGREDIENT,
 } from "../../services/actions/constructorAction";
-import ingredientType from "../../utils/types";
-import { TBurgerConstructorItems } from "../../services/types";
+import { TDropItems} from "../../services/types";
+import { TBurgerConstructorItems, useTypedDispatch } from "../../services/types";
 import style from "./burger-constructor-items.module.css";
 
 
 const BurgerConstructorItems:FC<TBurgerConstructorItems> = ({ index, items }) => {
-  const dispatch = useDispatch();
+  const dispatch = useTypedDispatch();
   const { image, id, price, name } = items;
   const ref = useRef(null);
 
@@ -36,7 +35,7 @@ const BurgerConstructorItems:FC<TBurgerConstructorItems> = ({ index, items }) =>
     },
   });
 
-  const [, drop] = useDrop({
+  const [, drop] = useDrop<TDropItems>({
     accept: "item",
     hover(items) {
       if (!ref.current) {
@@ -71,9 +70,5 @@ const BurgerConstructorItems:FC<TBurgerConstructorItems> = ({ index, items }) =>
   );
 };
 
-BurgerConstructorItems.protoType = {
-  items: ingredientType.isRequired,
-  index: ingredientType.isRequired,
-};
 export default BurgerConstructorItems
 

@@ -1,19 +1,17 @@
 import { useMemo, FC } from "react";
-import {  useSelector } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
 import { useDrag } from "react-dnd";
 import {
   Counter,
   CurrencyIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import ingredientType from "../../utils/types";
 import style from "./ingredient-item.module.css";
-import {TIngredientsItems, TLocation} from '../../services/types'
+import {TIngredientsItems, TLocation, useTypedSelector} from '../../services/types'
 
 export const IngredientItem:FC<TIngredientsItems> =({ ingredient }) =>{
   
   const location = useLocation<TLocation>();
-  const { bun, items } = useSelector((state) => state.burgerConstructor);
+  const { bun, items } = useTypedSelector((state) => state.burgerConstructor);
   const { image, name, price } = ingredient;
   const [{ opacity }, dragRef] = useDrag({
     type: "ingredients",

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, ChangeEvent, FormEvent } from "react";
+import React, { useState, useEffect, ChangeEvent, FormEvent, FC } from "react";
 import {
   Button,
   Input,
@@ -8,7 +8,7 @@ import {
   wsAuthConnectionOpen,
 } from "../../services/actions/wsAuthAction";
 import { useDispatch, useSelector } from "react-redux";
-import  OrdersHistory  from "./orders-history/orders-history";
+import OrdersHistory from "./orders-history/orders-history";
 import {
   NavLink,
   Route,
@@ -21,11 +21,14 @@ import {
   updateUser,
   getUser,
 } from "../../services/actions/authAction";
-import { Orders } from "./orders-history/orders-history";
 import { OrderInfo } from "../../components/order-info/order-info";
 import style from "./profile.module.css";
-import { useTypedDispatch, useTypedSelector, TLocation } from "../../services/types";
-const Profile:FC=()=> {
+import {
+  useTypedDispatch,
+  useTypedSelector,
+  TLocation,
+} from "../../services/types";
+const Profile: FC = () => {
   const dispatch = useTypedDispatch();
   const location = useLocation<TLocation>();
   const background = location.state?.background;
@@ -41,11 +44,11 @@ const Profile:FC=()=> {
     dispatch(singOut());
   }
 
-  function onChange(evt:ChangeEvent<HTMLInputElement>) {
+  function onChange(evt: ChangeEvent<HTMLInputElement>) {
     setForm({ ...form, [evt.target.name]: evt.target.value });
   }
 
-  function submit(evt:FormEvent<HTMLFormElement>) {
+  function submit(evt: FormEvent<HTMLFormElement>) {
     evt.preventDefault();
     dispatch(updateUser(form.email, form.name, form.password));
   }
@@ -65,11 +68,11 @@ const Profile:FC=()=> {
     });
   }, [email, name]);
 
-  function reset(evt:ChangeEvent<HTMLInputElement>) {
+  function reset(evt: ChangeEvent<HTMLInputElement>) {
     evt.preventDefault();
     setForm({
-      email: email,
-      name: name,
+      email: "",
+      name: "",
       password: "",
     });
   }
@@ -167,7 +170,12 @@ const Profile:FC=()=> {
               />
             </div>
             <div className={style.buttons}>
-              <Button type="primary" size="medium" onClick={reset}>
+              <Button
+                disabled={!!form.email && !!form.name}
+                type="primary"
+                size="medium"
+                onClick={() => reset}
+              >
                 Oтмена
               </Button>
               <Button
@@ -183,5 +191,5 @@ const Profile:FC=()=> {
       </Switch>
     </div>
   );
-}
-export default Profile
+};
+export default Profile;

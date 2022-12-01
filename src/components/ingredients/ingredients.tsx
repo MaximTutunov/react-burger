@@ -1,11 +1,10 @@
-import {IngredientItem} from "../ingredient-item/ingredient-item";
-import PropTypes from "prop-types";
+import { IngredientItem } from "../ingredient-item/ingredient-item";
 import styles from "./ingredients.module.css";
-import {FC} from 'react';
-import {TIngredientsCat} from '../../services/types'
+import { FC } from "react";
+import { TIngredientsCat, TCat } from "../../services/types";
 
-const Ingredients:FC<TIngredientsCat>=({ tabRef, ingredients, type })=>{
-  const categories = {
+const Ingredients: FC<TIngredientsCat> = ({ tabRef, ingredients, type }) => {
+  const categories: TCat = {
     bun: "Булки",
     sauce: "Соусы",
     main: "Начинки",
@@ -30,7 +29,6 @@ const Ingredients:FC<TIngredientsCat>=({ tabRef, ingredients, type })=>{
       </ul>
     </li>
   );
-}
+};
 
-
-export default Ingredients
+export default Ingredients;
