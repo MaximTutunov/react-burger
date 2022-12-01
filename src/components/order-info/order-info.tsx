@@ -17,7 +17,7 @@ import style from "./order-info.module.css";
 import {FC} from 'react';
 import {useTypedSelector, useTypedDispatch} from '../../services/types';
 
- const OrderInfo:FC = () => {
+ export const OrderInfo:FC = () => {
   const dispatch = useTypedDispatch();
   let match = useRouteMatch();
   const isProfile = "/profile/orders/:id";
@@ -108,4 +108,3 @@ import {useTypedSelector, useTypedDispatch} from '../../services/types';
     </>
   );
 };
-export default OrderInfo

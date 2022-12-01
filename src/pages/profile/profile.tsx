@@ -8,7 +8,7 @@ import {
   wsAuthConnectionOpen,
 } from "../../services/actions/wsAuthAction";
 import { useDispatch, useSelector } from "react-redux";
-import { OrdersHistory } from "./orders-history/orders-history";
+import  OrdersHistory  from "./orders-history/orders-history";
 import {
   NavLink,
   Route,

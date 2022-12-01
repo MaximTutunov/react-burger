@@ -1,6 +1,6 @@
 import { useSelector } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
-import { OrdersCard } from "../orders-card/orders-card";
+import OrdersCard  from "../orders-card/orders-card";
 import style from "./orders.module.css";
 import {FC} from 'react';
 import {TLocation, useTypedSelector} from '../../services/types';

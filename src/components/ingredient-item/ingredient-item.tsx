@@ -10,7 +10,7 @@ import ingredientType from "../../utils/types";
 import style from "./ingredient-item.module.css";
 import {TIngredientsItems, TLocation} from '../../services/types'
 
-const IngredientItem:FC<TIngredientsItems> =({ ingredient }) =>{
+export const IngredientItem:FC<TIngredientsItems> =({ ingredient }) =>{
   
   const location = useLocation<TLocation>();
   const { bun, items } = useSelector((state) => state.burgerConstructor);
@@ -55,6 +55,4 @@ const IngredientItem:FC<TIngredientsItems> =({ ingredient }) =>{
   );
 }
 
-IngredientItem.protoType = {
-  ingredient: ingredientType.isRequired,
-};
+

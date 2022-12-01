@@ -1,4 +1,4 @@
-import IngredientItem from "../ingredient-item/ingredient-item";
+import {IngredientItem} from "../ingredient-item/ingredient-item";
 import PropTypes from "prop-types";
 import styles from "./ingredients.module.css";
 import {FC} from 'react';

@@ -1,8 +1,8 @@
 import { useSelector } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
-import { OrdersCard } from "../../../components/orders-card/orders-card";
+import  OrdersCard  from "../../../components/orders-card/orders-card";
 import style from "./orders-history.module.css";
-import {TLocation, useTypedSelector } from "../../services/types";
+import {TLocation, useTypedSelector } from "../../../services/types";
 import {FC} from 'react'
 
 const OrdersHistory:FC=()=> {
