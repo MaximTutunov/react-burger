@@ -1,6 +1,4 @@
 import { useMemo } from "react";
-import { useSelector } from "react-redux";
-import uniqid from "uniqid";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import propTypes from "prop-types";
 import  OrderImage  from "../order-image/order-image";
