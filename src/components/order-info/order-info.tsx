@@ -12,17 +12,23 @@ import {
   wsAuthConnectionOpen,
 } from "../../services/actions/wsAuthAction";
 import style from "./order-info.module.css";
-import {FC} from 'react';
-import {useTypedSelector, useTypedDispatch, TIngredients} from '../../services/types';
+import { FC } from "react";
+import {
+  useTypedSelector,
+  useTypedDispatch,
+  TIngredients,
+} from "../../services/types";
 
- export const OrderInfo:FC = () => {
+export const OrderInfo: FC = () => {
   const dispatch = useTypedDispatch();
   let match = useRouteMatch();
   const isProfile = "/profile/orders/:id";
   const isFeed = "/feed/:id";
-  let { id } = useParams<{id:string}>();
+  let { id } = useParams<{ id: string }>();
   const allOrders = useTypedSelector((store) => store.wsFeed.orders);
-  const authorizationOrders = useTypedSelector((store) => store.wsAuthFeed.orders);
+  const authorizationOrders = useTypedSelector(
+    (store) => store.wsAuthFeed.orders
+  );
   const ingredients = useTypedSelector(
     (store) => store.burgerIngredients.ingredients
   );
@@ -88,7 +94,10 @@ import {useTypedSelector, useTypedDispatch, TIngredients} from '../../services/t
             Состав:
           </h3>
           <ul className={`${style.list}`}>
-            <OrderInfoDetails details={orderIngredientsData as TIngredients[]} key={id} />
+            <OrderInfoDetails
+              details={orderIngredientsData as TIngredients[]}
+              key={id}
+            />
           </ul>
           <div className={`${style.total} pb-10`}>
             <p className="text text_type_main-default text_color_inactive">

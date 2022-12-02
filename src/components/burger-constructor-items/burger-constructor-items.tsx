@@ -1,4 +1,4 @@
-import React, { useRef, FC } from "react";
+import { useRef, FC } from "react";
 import { useDrag, useDrop } from "react-dnd";
 import {
   ConstructorElement,
@@ -8,17 +8,22 @@ import {
   DELETE_INGREDIENT,
   MOVE_INGREDIENT,
 } from "../../services/actions/constructorAction";
-import { TDropItems} from "../../services/types";
-import { TBurgerConstructorItems, useTypedDispatch } from "../../services/types";
+import { TDropItems } from "../../services/types";
+import {
+  TBurgerConstructorItems,
+  useTypedDispatch,
+} from "../../services/types";
 import style from "./burger-constructor-items.module.css";
 
-
-const BurgerConstructorItems:FC<TBurgerConstructorItems> = ({ index, items }) => {
+const BurgerConstructorItems: FC<TBurgerConstructorItems> = ({
+  index,
+  items,
+}) => {
   const dispatch = useTypedDispatch();
   const { image, id, price, name } = items;
   const ref = useRef(null);
 
-  const onDelete = (id?:string) => {
+  const onDelete = (id?: string) => {
     dispatch({
       type: DELETE_INGREDIENT,
       id: id,
@@ -54,11 +59,7 @@ const BurgerConstructorItems:FC<TBurgerConstructorItems> = ({ index, items }) =>
   drag(drop(ref));
 
   return (
-    <li
-      className={`${style.item} pt-4 pr-3`}
-      style={{ opacity }}
-      ref={ref}
-    >
+    <li className={`${style.item} pt-4 pr-3`} style={{ opacity }} ref={ref}>
       <DragIcon type="primary" />
       <ConstructorElement
         text={name}
@@ -70,5 +71,4 @@ const BurgerConstructorItems:FC<TBurgerConstructorItems> = ({ index, items }) =>
   );
 };
 
-export default BurgerConstructorItems
-
+export default BurgerConstructorItems;

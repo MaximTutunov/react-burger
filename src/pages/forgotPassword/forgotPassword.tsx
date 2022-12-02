@@ -1,5 +1,4 @@
-import React, { useState,FC, ChangeEvent, FormEvent } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useState, FC, ChangeEvent, FormEvent } from "react";
 import { Link, Redirect, useLocation } from "react-router-dom";
 import {
   Button,
@@ -8,20 +7,26 @@ import {
 import { forgotPassword } from "../../services/actions/authAction";
 import { getCookie } from "../../utils/cookie";
 import style from "./forgotPassword.module.css";
-import { TLocation, useTypedDispatch, useTypedSelector } from "../../services/types";
+import {
+  TLocation,
+  useTypedDispatch,
+  useTypedSelector,
+} from "../../services/types";
 
-const ForgotPassword:FC = ()=> {
+const ForgotPassword: FC = () => {
   const dispatch = useTypedDispatch();
   const location = useLocation<TLocation>();
   const [email, setEmail] = useState("");
   const cookie = getCookie("token");
-  const { forgotPassSuccess } = useTypedSelector((state) => state.authorization);
+  const { forgotPassSuccess } = useTypedSelector(
+    (state) => state.authorization
+  );
 
-  function onChange(evt:ChangeEvent<HTMLInputElement>) {
+  function onChange(evt: ChangeEvent<HTMLInputElement>) {
     setEmail(evt.target.value);
   }
 
-  function onSubmit(evt:FormEvent<HTMLFormElement>) {
+  function onSubmit(evt: FormEvent<HTMLFormElement>) {
     evt.preventDefault();
     dispatch(forgotPassword({ email }));
   }
@@ -32,9 +37,7 @@ const ForgotPassword:FC = ()=> {
 
   return (
     <div className={style.container}>
-      <h2
-        className={`${style.title} pb-5 text_type_main-medium text`}
-      >
+      <h2 className={`${style.title} pb-5 text_type_main-medium text`}>
         Восстановление пароля
       </h2>
       <form className={style.form} onSubmit={onSubmit}>
@@ -50,7 +53,12 @@ const ForgotPassword:FC = ()=> {
             size={"default"}
           />
         </div>
-        <Button disabled={!email} type="primary" size="medium" htmlType="button">
+        <Button
+          disabled={!email}
+          type="primary"
+          size="medium"
+          htmlType="button"
+        >
           {forgotPassSuccess ? <Redirect to="/reset-password" /> : ""}
           Восстановить
         </Button>
@@ -64,4 +72,4 @@ const ForgotPassword:FC = ()=> {
     </div>
   );
 };
-export default ForgotPassword
+export default ForgotPassword;

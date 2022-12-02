@@ -7,7 +7,7 @@ export const Api = {
   },
 };
 
-export const checkResponse = (res:Response) => {
+export const checkResponse = (res: Response) => {
   if (res.ok) {
     return res.json();
   } else {
@@ -15,8 +15,8 @@ export const checkResponse = (res:Response) => {
   }
 };
 
-function request(url:string, options:RequestInit) {
-  return fetch(url, options).then(res=>checkResponse(res));
+function request(url: string, options: RequestInit) {
+  return fetch(url, options).then((res) => checkResponse(res));
 }
 
 export const getIngredientsData = async () => {
@@ -38,7 +38,11 @@ export const getUserRequest = async () => {
   });
 };
 
-export const updateUserRequest = async (email:string, name:string, password:string) => {
+export const updateUserRequest = async (
+  email: string,
+  name: string,
+  password: string
+) => {
   return await fetchRefresh(`${Api.url}/auth/user`, {
     method: "PATCH",
     headers: {
@@ -53,7 +57,7 @@ export const updateUserRequest = async (email:string, name:string, password:stri
   });
 };
 
-export const getOrderDetailsData = async (productsId:string[]) => {
+export const getOrderDetailsData = async (productsId: string[]) => {
   return await request(`${Api.url}/orders`, {
     method: "POST",
     body: JSON.stringify({
@@ -66,7 +70,7 @@ export const getOrderDetailsData = async (productsId:string[]) => {
   });
 };
 
-export const forgotPassRequest = async (email:string) => {
+export const forgotPassRequest = async (email: string) => {
   return await request(`${Api.url}/password-reset`, {
     method: "POST",
     body: JSON.stringify(email),
@@ -78,20 +82,20 @@ export const forgotPassRequest = async (email:string) => {
     },
     redirect: "follow",
     referrerPolicy: "no-referrer",
-  })
+  });
 };
 
-export const resetPassRequest = async (password:string, token:any) => {
+export const resetPassRequest = async (password: string, token: any) => {
   return await request(`${Api.url}/password-reset/reset`, {
     method: "POST",
     body: JSON.stringify(password, token),
     headers: {
       "Content-Type": "application/json",
     },
-  })
+  });
 };
 
-export const loginRequest = async (email:string, password:string) => {
+export const loginRequest = async (email: string, password: string) => {
   return await request(`${Api.url}/auth/login`, {
     method: "POST",
     headers: {
@@ -101,10 +105,14 @@ export const loginRequest = async (email:string, password:string) => {
       email: email,
       password: password,
     }),
-  })
+  });
 };
 
-export const registerUserRequest = async (email:string, password:string, name:string) => {
+export const registerUserRequest = async (
+  email: string,
+  password: string,
+  name: string
+) => {
   return await request(`${Api.url}/auth/register`, {
     method: "POST",
     body: JSON.stringify({
@@ -115,7 +123,7 @@ export const registerUserRequest = async (email:string, password:string, name:st
     headers: {
       "Content-Type": "application/json",
     },
-  })
+  });
 };
 
 export const logoutRequest = async () => {
@@ -127,7 +135,7 @@ export const logoutRequest = async () => {
     body: JSON.stringify({
       token: localStorage.getItem("refreshToken"),
     }),
-  })
+  });
 };
 
 export const updateTokenRequest = async () => {
@@ -139,14 +147,14 @@ export const updateTokenRequest = async () => {
     body: JSON.stringify({
       token: localStorage.getItem("refreshToken"),
     }),
-  })
+  });
 };
 
-export const fetchRefresh = async (url:string, options:RequestInit) => {
+export const fetchRefresh = async (url: string, options: RequestInit) => {
   try {
     const res = await fetch(url, options);
     return await checkResponse(res);
-  } catch (err:any) {
+  } catch (err: any) {
     if (err.message === "jwt expired") {
       const refreshToken = await updateTokenRequest();
       const accessToken = refreshToken.accessToken.split("Bearer ")[1];
@@ -155,7 +163,8 @@ export const fetchRefresh = async (url:string, options:RequestInit) => {
       }
       localStorage.setItem("refreshToken", refreshToken.refreshToken);
       setCookie("token", accessToken);
-      (options.headers as {[key:string]:string}).Authorization = refreshToken.accessToken;
+      (options.headers as { [key: string]: string }).Authorization =
+        refreshToken.accessToken;
       const res = await fetch(url, options);
       return await checkResponse(res);
     } else {

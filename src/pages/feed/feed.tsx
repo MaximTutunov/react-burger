@@ -1,14 +1,14 @@
 import { useEffect, FC } from "react";
-import  OrdersStatus  from "../../components/orders-status/orders-status";
-import  Orders  from "../../components/orders/orders";
+import OrdersStatus from "../../components/orders-status/orders-status";
+import Orders from "../../components/orders/orders";
 import {
-    wsConnectionClosed,
-    wsConnectionOpen,
-  } from "../../services/actions/wsAction";
+  wsConnectionClosed,
+  wsConnectionOpen,
+} from "../../services/actions/wsAction";
 import style from "./feed.module.css";
 import { useTypedDispatch } from "../../services/types";
 
-export const Feed:FC = () => {
+export const Feed: FC = () => {
   const dispatch = useTypedDispatch();
   useEffect(() => {
     dispatch(wsConnectionOpen());
@@ -29,4 +29,4 @@ export const Feed:FC = () => {
     </div>
   );
 };
-export default Feed
+export default Feed;

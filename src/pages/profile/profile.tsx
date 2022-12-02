@@ -1,4 +1,4 @@
-import  { useState, useEffect, ChangeEvent, FormEvent, FC } from "react";
+import { useState, useEffect, ChangeEvent, FormEvent, FC } from "react";
 import {
   Button,
   Input,
@@ -196,4 +196,3 @@ export const Profile: FC = () => {
     </div>
   );
 };
-

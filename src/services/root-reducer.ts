@@ -9,12 +9,12 @@ import { wsReducer } from "./reducers/wsReducer";
 import { wsAuthReducer } from "./reducers/wsAuthReducer";
 
 export const rootReducer = combineReducers({
-	burgerConstructor: constructorReducer,
-	burgerIngredients: ingredientsReducer,
-	ingredientDetails: detailsReducer,
-	order: orderReducer,
-	authorization: authReducer,
-	orderInfo: orderInfoReducer,
-	wsFeed: wsReducer,
-	wsAuthFeed: wsAuthReducer,
+  burgerConstructor: constructorReducer,
+  burgerIngredients: ingredientsReducer,
+  ingredientDetails: detailsReducer,
+  order: orderReducer,
+  authorization: authReducer,
+  orderInfo: orderInfoReducer,
+  wsFeed: wsReducer,
+  wsAuthFeed: wsAuthReducer,
 });

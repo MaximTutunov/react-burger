@@ -1,16 +1,16 @@
-import { useSelector } from "react-redux";
 import style from "./orders-status.module.css";
-import {FC} from 'react';
-import {useTypedSelector} from '../../services/types';
+import { FC } from "react";
+import { useTypedSelector } from "../../services/types";
 
-const OrdersStatus:FC = () => {
-     
-    const { total, totalToday, orders } = useTypedSelector((store) => store.wsFeed);
- 
+const OrdersStatus: FC = () => {
+  const { total, totalToday, orders } = useTypedSelector(
+    (store) => store.wsFeed
+  );
+
   const doneStatusOrder = orders
     .filter((order) => order.status === "done")
     .filter((order, index) => index < 20);
-    
+
   const pendingStatusOrder = orders
     .filter((order) => order.status === "pending")
     .filter((order, index) => index < 10);
@@ -64,4 +64,4 @@ const OrdersStatus:FC = () => {
     </div>
   );
 };
-export default OrdersStatus
+export default OrdersStatus;

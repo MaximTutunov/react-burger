@@ -1,14 +1,12 @@
 import { useMemo } from "react";
-import { useSelector } from "react-redux";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import OrderImage from "../order-image/order-image";
 import { formatDate } from "../../utils/cookie";
-import propTypes from "prop-types";
 import style from "./orders-card.module.css";
-import {FC} from 'react';
-import {TOrdersCard, useTypedSelector} from '../../services/types';
+import { FC } from "react";
+import { TOrdersCard, useTypedSelector } from "../../services/types";
 
-const OrdersCard:FC<TOrdersCard> = ({ order, status }) => {
+const OrdersCard: FC<TOrdersCard> = ({ order, status }) => {
   const { createdAt, number, name } = order;
   const ingredients = useTypedSelector(
     (store) => store.burgerIngredients.ingredients
@@ -61,9 +59,7 @@ const OrdersCard:FC<TOrdersCard> = ({ order, status }) => {
             orderIngredientsData.map((item, index) => {
               return (
                 <li className={style.items} key={index}>
-                  {item && (
-                    <OrderImage image={item.image} alt={item.name} />
-                  )}
+                  {item && <OrderImage image={item.image} alt={item.name} />}
                 </li>
               );
             })}
@@ -72,9 +68,7 @@ const OrdersCard:FC<TOrdersCard> = ({ order, status }) => {
             orderIngredientsData.slice(0, 5).map((item, index) => {
               return (
                 <li className={style.items} key={index}>
-                  {item && (
-                    <OrderImage image={item.image} alt={item.name} />
-                  )}
+                  {item && <OrderImage image={item.image} alt={item.name} />}
                 </li>
               );
             })}
@@ -89,10 +83,7 @@ const OrdersCard:FC<TOrdersCard> = ({ order, status }) => {
                         className={`${style.hideText} text text_type_main-default`}
                       >{`+${hideItems}`}</p>
                       <div className={style.hideImage}>
-                        <OrderImage
-                          image={item.image}
-                          alt={item.name}
-                        />
+                        <OrderImage image={item.image} alt={item.name} />
                       </div>
                     </>
                   )}
@@ -110,4 +101,4 @@ const OrdersCard:FC<TOrdersCard> = ({ order, status }) => {
     </div>
   );
 };
-export default OrdersCard
+export default OrdersCard;

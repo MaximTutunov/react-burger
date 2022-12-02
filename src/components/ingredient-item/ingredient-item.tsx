@@ -6,10 +6,13 @@ import {
   CurrencyIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import style from "./ingredient-item.module.css";
-import {TIngredientsItems, TLocation, useTypedSelector} from '../../services/types'
+import {
+  TIngredientsItems,
+  TLocation,
+  useTypedSelector,
+} from "../../services/types";
 
-export const IngredientItem:FC<TIngredientsItems> =({ ingredient }) =>{
-  
+export const IngredientItem: FC<TIngredientsItems> = ({ ingredient }) => {
   const location = useLocation<TLocation>();
   const { bun, items } = useTypedSelector((state) => state.burgerConstructor);
   const { image, name, price } = ingredient;
@@ -51,6 +54,4 @@ export const IngredientItem:FC<TIngredientsItems> =({ ingredient }) =>{
       </div>
     </Link>
   );
-}
-
-
+};

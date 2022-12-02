@@ -1,73 +1,66 @@
-import {TUser} from '../types';
-import { TAuthActions } from '../actions/authAction';
+import { TUser } from "../types";
+import { TAuthActions } from "../actions/authAction";
 import {
   FORGOT_PASSWORD_REQUEST,
   FORGOT_PASSWORD_SUCCESS,
   FORGOT_PASSWORD_FAILED,
-
   GET_USER_REQUEST,
   GET_USER_SUCCESS,
   GET_USER_FAILED,
-
   LOGIN_FORM_SET_VALUE,
   LOGIN_FORM_REQUEST,
   LOGIN_FORM_SUCCESS,
   LOGIN_FORM_FAILED,
-   
   LOGOUT_FORM_REQUEST,
   LOGOUT_FORM_SUCCESS,
   LOGOUT_FORM_FAILED,
-  
   PATCH_USER_REQUEST,
   PATCH_USER_SUCCESS,
   PATCH_USER_FAILED,
-  
   REGISTER_FORM_SET_VALUE,
   REGISTER_FORM_REQUEST,
   REGISTER_FORM_SUCCESS,
   REGISTER_FORM_FAILED,
-      
   RESET_FORM_SET_VALUE,
   RESET_PASSWORD_REQUEST,
   RESET_PASSWORD_SUCCESS,
   RESET_PASSWORD_FAILED,
- 
   UPDATE_TOKEN_REQUEST,
   UPDATE_TOKEN_SUCCESS,
-  UPDATE_TOKEN_FAILED, 
+  UPDATE_TOKEN_FAILED,
 } from "../actions/authAction";
 
 type TAuthInitialState = {
-  message: string,
+  message: string;
 
   form: {
-    email:string,
-    password: string,
-    code: string,
-    name: string,
-  },
-  user: TUser,
-  forgotPassRequest: boolean,
-  forgotPassFailed: boolean,
-  forgotPassSuccess: boolean,
-  resetPassRequest: boolean,
-  resetPassFailed: boolean,
-  resetPassSuccess: boolean,
-  loginRequest: boolean,
-  loginFailed: boolean,
-  loginSuccess: boolean,
-  logoutRequest: boolean,
-  logoutFailed: boolean,
-  getUserRequest: boolean,
-  getUserFailed: boolean,
-  updateUserRequest: boolean,
-  updateUserFailed: boolean,
-  updateTokenRequest: boolean,
-  updateTokenSuccess: boolean,
-  updateTokenFailed: boolean,
+    email: string;
+    password: string;
+    code: string;
+    name: string;
+  };
+  user: TUser;
+  forgotPassRequest: boolean;
+  forgotPassFailed: boolean;
+  forgotPassSuccess: boolean;
+  resetPassRequest: boolean;
+  resetPassFailed: boolean;
+  resetPassSuccess: boolean;
+  loginRequest: boolean;
+  loginFailed: boolean;
+  loginSuccess: boolean;
+  logoutRequest: boolean;
+  logoutFailed: boolean;
+  getUserRequest: boolean;
+  getUserFailed: boolean;
+  updateUserRequest: boolean;
+  updateUserFailed: boolean;
+  updateTokenRequest: boolean;
+  updateTokenSuccess: boolean;
+  updateTokenFailed: boolean;
 };
 
-const initialState:TAuthInitialState = {
+const initialState: TAuthInitialState = {
   message: "",
   form: {
     email: "",
@@ -100,7 +93,10 @@ const initialState:TAuthInitialState = {
   updateTokenFailed: false,
 };
 
-export const authReducer = (state = initialState, action:TAuthActions):TAuthInitialState => {
+export const authReducer = (
+  state = initialState,
+  action: TAuthActions
+): TAuthInitialState => {
   switch (action.type) {
     case GET_USER_REQUEST: {
       return {

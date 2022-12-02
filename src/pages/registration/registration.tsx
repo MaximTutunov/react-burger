@@ -1,4 +1,3 @@
-import { useSelector, useDispatch } from "react-redux";
 import { Link, Redirect, useLocation } from "react-router-dom";
 import {
   Button,
@@ -12,11 +11,14 @@ import {
 } from "../../services/actions/authAction";
 import { getCookie } from "../../utils/cookie";
 import style from "./registration.module.css";
-import { useTypedDispatch, useTypedSelector, TLocation } from "../../services/types";
-import React, { FC, useState, useEffect, ChangeEvent, FormEvent } from "react";
+import {
+  useTypedDispatch,
+  useTypedSelector,
+  TLocation,
+} from "../../services/types";
+import { FC, ChangeEvent, FormEvent } from "react";
 
-
-const Register:FC= ()=> {
+const Register: FC = () => {
   const dispatch = useTypedDispatch();
   const location = useLocation<TLocation>();
   const { email, password, name } = useTypedSelector(
@@ -24,12 +26,12 @@ const Register:FC= ()=> {
   );
   const cookie = getCookie("token");
 
-  function formSubmit(evt:FormEvent<HTMLFormElement>) {
+  function formSubmit(evt: FormEvent<HTMLFormElement>) {
     evt.preventDefault();
     dispatch(registerUser(email, password, name));
   }
 
-  function onChange(evt:ChangeEvent<HTMLInputElement>) {
+  function onChange(evt: ChangeEvent<HTMLInputElement>) {
     dispatch(setRegisterFormValue(evt.target.name, evt.target.value));
   }
 
@@ -39,9 +41,7 @@ const Register:FC= ()=> {
 
   return (
     <div className={style.container}>
-      <h2
-        className={`${style.title} pb-6 text_type_main-medium text`}
-      >
+      <h2 className={`${style.title} pb-6 text_type_main-medium text`}>
         Регистрация
       </h2>
       <form className={style.form} onSubmit={formSubmit}>
@@ -90,4 +90,4 @@ const Register:FC= ()=> {
     </div>
   );
 };
-export default Register
+export default Register;

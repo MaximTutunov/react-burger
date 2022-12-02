@@ -28,7 +28,7 @@ type TAppActions =
   | TWsAuthActions;
 
 export type RootState = ReturnType<typeof rootReducer>;
-export type AppThunk<ReturnType = Promise<any>|void> = ActionCreator<
+export type AppThunk<ReturnType = Promise<any> | void> = ActionCreator<
   ThunkAction<ReturnType, Action, RootState, TAppActions>
 >;
 export type AppDispatch = typeof store.dispatch;
@@ -187,11 +187,11 @@ export type TOrderImage = {
   alt: string;
 };
 export type TCat = {
-  [key:string]:string
-}
+  [key: string]: string;
+};
 
-export type TDropItems ={
+export type TDropItems = {
   index: number;
-	type: string;
-	id?: string;
-}
+  type: string;
+  id?: string;
+};

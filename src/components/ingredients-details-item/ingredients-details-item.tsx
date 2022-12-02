@@ -1,8 +1,7 @@
-import PropTypes from "prop-types";
-import{FC} from 'react';
+import { FC } from "react";
 import style from "./ingredients-details-item.module.css";
-import {TIngredientsDetailsItem} from "../../services/types"
-const IngredientsDetailsItem:FC<TIngredientsDetailsItem> = (data) => {
+import { TIngredientsDetailsItem } from "../../services/types";
+const IngredientsDetailsItem: FC<TIngredientsDetailsItem> = (data) => {
   return (
     <li className={`${style.item}`}>
       <p
@@ -17,7 +16,5 @@ const IngredientsDetailsItem:FC<TIngredientsDetailsItem> = (data) => {
       </p>
     </li>
   );
-}
-
-
+};
 export default IngredientsDetailsItem;

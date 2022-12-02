@@ -1,10 +1,10 @@
 import { Link, useLocation } from "react-router-dom";
-import OrdersCard  from "../orders-card/orders-card";
+import OrdersCard from "../orders-card/orders-card";
 import style from "./orders.module.css";
-import {FC} from 'react';
-import {TLocation, useTypedSelector} from '../../services/types';
+import { FC } from "react";
+import { TLocation, useTypedSelector } from "../../services/types";
 
-const Orders:FC = () => {
+const Orders: FC = () => {
   const location = useLocation<TLocation>();
   const orders = useTypedSelector((store) => store.wsFeed.orders);
   return (
@@ -27,4 +27,4 @@ const Orders:FC = () => {
     </div>
   );
 };
-export default Orders
+export default Orders;

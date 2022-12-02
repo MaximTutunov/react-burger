@@ -15,13 +15,13 @@ import {
 } from "../../services/actions/constructorAction";
 import style from "./burger-constructor.module.css";
 import { TIngredients } from "../../services/types";
-import {useTypedSelector, useTypedDispatch} from '../../services/types';
+import { useTypedSelector, useTypedDispatch } from "../../services/types";
 
 interface DropItem {
-ingredient: TIngredients
+  ingredient: TIngredients;
 }
 
-const BurgerConstructor: FC =()=> {
+const BurgerConstructor: FC = () => {
   const history = useHistory();
   const dispatch = useTypedDispatch();
   const [total, setTotal] = useState(0);
@@ -38,10 +38,9 @@ const BurgerConstructor: FC =()=> {
     [items]
   );
 
-  const orderDetailsModal = (itemsId:string[]) => {
+  const orderDetailsModal = (itemsId: string[]) => {
     cookie && dispatch(getOrderDetails(itemsId));
     !cookie && history.push("/login");
-    
   };
 
   useEffect(() => {
@@ -54,7 +53,7 @@ const BurgerConstructor: FC =()=> {
 
   const [, dropTarget] = useDrop({
     accept: "ingredients",
-    drop(item:DropItem) {
+    drop(item: DropItem) {
       if (item.ingredient.type === "bun") {
         dispatch({
           type: ADD_BUN,
@@ -93,7 +92,7 @@ const BurgerConstructor: FC =()=> {
           <p
             className={`${style.maininitial} ${style.listmain} ${style.text} pr-2 text text_type_main-large text_color_inactive`}
           >
-            Перенесите начинку 
+            Перенесите начинку
           </p>
         ) : (
           <ul className={`${style.list} pr-4`}>
@@ -115,7 +114,7 @@ const BurgerConstructor: FC =()=> {
           <p
             className={`${style.buninitial} text text_type_main-large pr-2 text_color_inactive`}
           >
-            Перенесите булочку 
+            Перенесите булочку
           </p>
         ) : (
           <ConstructorElement
@@ -144,8 +143,7 @@ const BurgerConstructor: FC =()=> {
             htmlType="button"
           >
             {orderDetailsRequest ? (
-                <div className={style.loader} />
-
+              <div className={style.loader} />
             ) : (
               "Оформить заказ"
             )}
@@ -155,9 +153,9 @@ const BurgerConstructor: FC =()=> {
             type="primary"
             size="large"
             onClick={() => {
-              orderDetailsModal(itemsId)
-                         }}
-                         htmlType="button"
+              orderDetailsModal(itemsId);
+            }}
+            htmlType="button"
           >
             Оформить заказ
           </Button>
@@ -165,7 +163,6 @@ const BurgerConstructor: FC =()=> {
       </div>
     </section>
   );
- 
-}
+};
 
-export default BurgerConstructor
+export default BurgerConstructor;

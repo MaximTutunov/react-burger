@@ -14,7 +14,7 @@ type TConstructorInitialState = {
   bun: TIngredients;
 };
 
-const initialState:TConstructorInitialState = {
+const initialState: TConstructorInitialState = {
   itemsId: [],
   items: [],
   bun: {
@@ -32,7 +32,7 @@ const initialState:TConstructorInitialState = {
     image: "",
     image_large: "",
     image_mobile: "",
-    length:0,
+    length: 0,
   },
 };
 
