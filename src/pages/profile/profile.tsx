@@ -25,8 +25,9 @@ import style from "./profile.module.css";
 import {
   useTypedDispatch,
   useTypedSelector,
-  TLocation,
+  TLocation, TProfile
 } from "../../services/types";
+
 
 export const Profile: FC = () => {
   const dispatch = useTypedDispatch();
@@ -36,7 +37,7 @@ export const Profile: FC = () => {
 
   const { email, name } = useTypedSelector((state) => state.authorization.user);
 
-  const [form, setForm] = useState({
+  const [form, setForm] = useState<TProfile>({
     email: "",
     name: "",
     password: "",

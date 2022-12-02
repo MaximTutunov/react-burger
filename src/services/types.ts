@@ -170,6 +170,11 @@ export type TBurgerConstructorItems = {
   items: TIngredients;
 };
 
+export type TProfile = {
+  email: string;
+  name: string;
+ password: string;
+  };
 export type TIngredientsItems = {
   ingredient: TIngredients;
 };

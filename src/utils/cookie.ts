@@ -43,19 +43,22 @@ export const formatDate = (date: string) => {
     minute: "numeric",
     timeZone: "Europe/Moscow",
   });
-  let dateOfOrder = new Date(date);
-  const today = new Date();
-  function diffSubtract(dayOne: any, dayTwo: any): number {
+  
+  let dateOfOrder = new Date(date).getTime();
+  const today = new Date().getTime();
+  
+    function diffSubtract(dayOne: number, dayTwo: number): number {
     return Math.ceil((dayOne - dayTwo) / 86400000);
-  }
+     }
   let dCount = diffSubtract(today, dateOfOrder);
+  
   const formatterForDay = new Intl.DateTimeFormat("ru", {
     day: "numeric",
     year: "numeric",
     month: "long",
     timeZone: "Europe/Moscow",
   });
-  const formatDay = (dateOfOrder: Date, dCount: number): string | undefined => {
+  const formatDay = (dateOfOrder: number, dCount: number): string | undefined => {
     if (formatterForDay.format(today) === formatterForDay.format(dateOfOrder)) {
       return "Cегодня";
     }
@@ -66,7 +69,7 @@ export const formatDate = (date: string) => {
       return `${dCount} дня назад`;
     }
     if (dCount > 4) {
-      return `${dateOfOrder.toLocaleDateString("ru-RU")}`;
+      return `${dateOfOrder.toLocaleString("ru-RU")}`;
     }
   };
   return `${formatDay(dateOfOrder, dCount)}, ${formatter.format(
