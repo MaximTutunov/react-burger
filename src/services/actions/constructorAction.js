@@ -1,6 +1,0 @@
-export const ADD_BUN = "ADD_BUN";
-export const ADD_INGREDIENT_CONSTRUCTOR = "ADD_ITEM_CONSTRUCTOR";
-export const RESET_INGREDIENT = "RESET_ITEM";
-export const MOVE_INGREDIENT = "MOVE_ITEM";
-export const DELETE_INGREDIENT = 'DELETE_ITEM';
-

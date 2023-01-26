@@ -25,7 +25,7 @@ import { socketMiddleware } from "./middleware/socketMw";
 
 const wsUrl = "wss://norma.nomoreparties.space/orders/all";
 const wsAuthUrl = "wss://norma.nomoreparties.space/orders";
- 
+
 const wsActions = {
   wsInit: WS_CONNECTION_START,
   wsSendMessage: WS_SEND_ORDERS,
